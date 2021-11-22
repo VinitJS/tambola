@@ -1,25 +1,36 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "Browsie - Housie on Browser",
+  "short_name": "Browsie",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#feaf38",
+  "description": "Play Browsie with family and friends. Use strategies to win against all other players. Invite to play in big groups.",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "browsie16.png",
+      "type": "image/png",
+      "sizes": "16x16"
     },
     {
-      "src": "logo192.png",
+      "src": "browsie32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "browsie64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "browsie192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "browsie512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#feaf38"
 }

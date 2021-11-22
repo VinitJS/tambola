@@ -1,0 +1,15 @@
+.Drawn > .board-border > .board {
+    padding: 5px;
+    height: 290px;
+    width: 333px;
+}
+
+.Drawn > .board-border >.board > .cell {
+    width: 35px;
+    height: 27px;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    margin: 1px;
+    padding: 3px;
+}

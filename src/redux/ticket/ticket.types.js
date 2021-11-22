@@ -1,0 +1,9 @@
+const TicketActionTypes = {
+    SET_MYTICKET: 'SET_MYTICKET',
+    TOGGLE_TICK: 'TOGGLE_TICK',
+    SET_JOIN_ERROR: 'SET_JOIN_ERROR',
+    RESET_TICKET: 'RESET_TICKET',
+    SET_CREATING_TICKET: 'SET_CREATING_TICKET'
+}
+
+export default TicketActionTypes;

@@ -1,13 +1,612 @@
+:root {
+  --cdark: #1e1832;
+  --cfaintdark: #3b2f63;
+  --cred: #ca3038;
+  --corange: #de6a37;
+  --cyellow: #feaf38;
+  --clightyellow: #ffe598;
+  --cblue: #4b5bab;
+  --cbrightblue: #0000ee;
+  --cpink: #ff6b97;
+  --clightgreen: #cfff70;
+  --clight: #999999;
+  --clighter: #bbbbbb;
+  --clightest: #dddddd;
+  --cgreen: #4fce5d;
+}
+
+* {
+  margin-block-start:0;
+  margin-block-end:0;
+  margin-inline-start:0;
+  margin-inline-end:0;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Open Sans', sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/disp/acb65873426833.5c08f5634f7fb.png');
+  background-attachment: fixed;
+  background-size: 200px;
+}
+
+.title {
+  font-family: 'Sriracha', cursive;
+}
+
+.dnone {
+  display: none;
+}
+
+.tdnone {
+  text-decoration: none;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.tac {
+  text-align: center;
+}
+
+.frow {
+  display: flex;
+}
+
+.fwrap {
+  flex-wrap: wrap;
+}
+
+.fcol {
+  display: flex;
+  flex-direction: column;
+}
+
+.faic {
+  align-items: center;
+}
+
+.fjcsb {
+  justify-content: space-between;
+}
+
+.fjcs {
+  justify-content: flex-start;
+}
+
+.fjce {
+  justify-content: flex-end;
+}
+
+.fjcc {
+  justify-content: center;
+}
+
+.fgr1 {
+  flex-grow: 1;
+}
+
+.w100pc {
+  width: 100%;
+}
+
+.w80pc {
+  width: 80%;
+}
+
+.brr {
+  border: 1px solid var(--cred);
+}
+
+.cg {
+  color: var(--cgreen);
+}
+
+.bcg {
+  background-color: var(--cgreen);
+}
+
+.cfd {
+  color: var(--cfaintdark);
+}
+
+.bcfd {
+  background-color: var(--cfaintdark);
+}
+
+.cd {
+  color: var(--cdark);
+}
+
+.bcd {
+  background-color: var(--cdark);
+}
+
+.cr {
+  color: var(--cred);
+}
+
+.bcr {
+  background-color: var(--cred);
+}
+
+.co {
+  color: var(--corange);
+}
+
+.bco {
+  background-color: var(--corange);
+}
+
+.cy {
+  color: var(--cyellow);
+}
+
+.bcy {
+  background-color: var(--cyellow);
+}
+
+.cly {
+  color: var(--clightyellow);
+}
+
+.bcly {
+  background-color: var(--clightyellow);
+}
+
+.cb {
+  color: var(--cblue);
+}
+
+.bcb {
+  background-color: var(--cblue);;
+}
+
+.cbb {
+  color: var(--cbrightblue);
+}
+
+.bcbb {
+  background-color: var(--cbrightblue);
+}
+
+.cw {
+  color: white;
+}
+
+.bcw {
+  background-color: white;
+}
+
+.cbl {
+  color: black;
+}
+
+.bcbl {
+  background-color: black;
+}
+
+.cl {
+  color: var(--clight);
+}
+
+.bcl {
+  background-color: var(--clight);
+}
+
+.cler {
+  color: var(--clighter);
+}
+
+.bcler {
+  background-color: var(--clighter);
+}
+
+.clst {
+  color: var(--clightest);
+}
+
+.bclst {
+  background-color: var(--clightest);
+}
+
+.cp {
+  color: var(--cpink);
+}
+
+.bcp {
+  background-color: var(--cpink);
+}
+
+.clg {
+  color: var(--clightgreen);
+}
+
+.bclg {
+  background-color: var(--clightgreen);
+}
+
+.bcgo {
+/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#fceabb+0,fccd4d+50,f8b500+51,fbdf93+100;Orange+3D+%235 */
+background: #fceabb; /* Old browsers */
+background: -moz-linear-gradient(45deg,  #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(45deg,  #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(45deg,  #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.bcgg {
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e6f0a3+0,d2e638+50,c3d825+51,dbf043+100;Green+Gloss+%232 */
+background: #e6f0a3; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #e6f0a3 0%, #d2e638 50%, #c3d825 51%, #dbf043 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg,  #e6f0a3 0%,#d2e638 50%,#c3d825 51%,#dbf043 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg,  #e6f0a3 0%,#d2e638 50%,#c3d825 51%,#dbf043 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6f0a3', endColorstr='#dbf043',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.b {
+  font-weight: bold;
+}
+
+.fsxxl {
+  font-size: 24px
+}
+
+.fsxl {
+  font-size: 20px;
+}
+
+.fsl {
+  font-size: 16px;
+}
+
+.fss {
+  font-size: 12px;
+}
+
+.card {
+  overflow: hidden;
+}
+
+.card-header,
+.card-body {
+  padding: 5px;
+}
+
+.neu-up {
+  box-shadow: 5px 5px 10px #ccc, 
+              -5px -5px 10px #eee;
+}
+
+.neu-dn {
+  box-shadow: inset 5px 5px 10px #ccc, 
+              inset -5px -5px 10px #eee;
+}
+
+.btn-link {
+  text-decoration: none;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  font-weight: bold;
+}
+
+.btn:disabled,
+.btn:hover:disabled {
+  filter: saturate(0%);
+}
+
+.btn:hover {
+  filter: brightness(110%);
+}
+
+.btn:focus {
+  filter: brightness(120%);
+}
+
+.btn-b {
+  background-color: var(--cblue);
+  color: white;
+}
+
+.btn-g {
+  background-color: var(--cgreen);
+  color: white;
+}
+
+.btn-r {
+  background-color: var(--cred);
+  color: white;
+}
+
+.btn-o {
+  background-color: var(--corange);
+  color: black;
+}
+
+.btn-p {
+  background-color: var(--cpink);
+  color: black;
+}
+
+.btn-y {
+  background-color: var(--cyellow);
+  color: black;
+}
+
+.btn-d {
+  background-color: var(--cdark);
+  color: black;
+}
+
+.btn-lg {
+  background-color: var(--clightgreen);
+  color: black;
+}
+
+.btn-ly {
+  background-color: var(--clightyellow);
+  color: black;
+}
+
+.textbox {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px solid var(--clightest);
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
+  font-size: large;
+}
+
+.op50pc {
+  opacity: 0.5;
+}
+
+.op80pc {
+  opacity: 0.8;
+}
+
+.ma {
+  margin: auto;
+}
+
+.mxs {
+  margin: 5px;
+}
+
+.ms {
+  margin: 10px;
+}
+
+.mm {
+  margin: 15px;
+}
+
+.ml {
+  margin: 20px;
+}
+
+.mxl {
+  margin: 25px;
+}
+
+.mlxs {
+  margin-left: 5px;
+}
+
+.mls {
+  margin-left: 10px;
+}
+
+.mlm {
+  margin-left: 15px;
+}
+
+.mll {
+  margin-left: 20px;
+}
+
+.mlxl {
+  margin-left: 25px;
+}
+
+.mrxs {
+  margin-right: 5px;
+}
+
+.mrs {
+  margin-right: 10px;
+}
+
+.mrm {
+  margin-right: 15px;
+}
+
+.mrl {
+  margin-right: 20px;
+}
+
+.mrxl {
+  margin-right: 25px;
+}
+
+.mtxs {
+  margin-top: 5px;
+}
+
+.mts {
+  margin-top: 10px;
+}
+
+.mtm {
+  margin-top: 15px;
+}
+
+.mtl {
+  margin-top: 20px;
+}
+
+.mtxl {
+  margin-top: 25px;
+}
+
+.mbxs {
+  margin-bottom: 5px;
+}
+
+.mbs {
+  margin-bottom: 10px;
+}
+
+.mbm {
+  margin-bottom: 15px;
+}
+
+.mbl {
+  margin-bottom: 20px;
+}
+
+.mbxl {
+  margin-bottom: 25px;
+}
+
+.pxs {
+  padding: 5px;
+}
+
+.ps {
+  padding: 10px;
+}
+
+.pm {
+  padding: 15px;
+}
+
+.pl {
+  padding: 20px;
+}
+
+.pxl {
+  padding: 25px;
+}
+
+.plxs {
+  padding-left: 5px;
+}
+
+.pls {
+  padding-left: 10px;
+}
+
+.plm {
+  padding-left: 15px;
+}
+
+.pll {
+  padding-left: 20px;
+}
+
+.plxl {
+  padding-left: 25px;
+}
+
+.prxs {
+  padding-right: 5px;
+}
+
+.prs {
+  padding-right: 10px;
+}
+
+.prm {
+  padding-right: 15px;
+}
+
+.prl {
+  padding-right: 20px;
+}
+
+.prxl {
+  padding-right: 25px;
+}
+
+.ptxs {
+  padding-top: 5px;
+}
+
+.pts {
+  padding-top: 10px;
+}
+
+.ptm {
+  padding-top: 15px;
+}
+
+.ptl {
+  padding-top: 20px;
+}
+
+.ptxl {
+  padding-top: 25px;
+}
+
+.pbxs {
+  padding-bottom: 5px;
+}
+
+.pbs {
+  padding-bottom: 10px;
+}
+
+.pbm {
+  padding-bottom: 15px;
+}
+
+.pbl {
+  padding-bottom: 20px;
+}
+
+.pbxl {
+  padding-bottom: 25px;
+}
+
+.brxs {
+  border-radius: 3px;
+}
+
+.brs {
+  border-radius: 5px;
+}
+
+.brm {
+  border-radius: 10px;
+}
+
+.brl {
+  border-radius: 15px;
+}
+
+.brxl {
+  border-radius: 20px;
 }

@@ -1,0 +1,24 @@
+.Players > div > .player {
+    border-radius: 30px;
+}
+
+.Players > div > .player .avatar {
+    font-size: 30px;
+}
+
+.Players > div > .clap .avatar {
+    font-size: 30px;
+}
+
+.Players > div > .player > .points {
+    border-radius: 25px;
+    padding: 10px 0;
+    width: 40px;
+    height: 20px;
+}
+
+.Players > div > .clap > button {
+    border: none;
+    background: none;
+    outline: none;
+}

@@ -1,0 +1,50 @@
+.Claims > .card-body > .claim > .claim-btn {
+    overflow: hidden;
+    position: relative;
+    padding: 0;
+}
+
+.Claims > .card-body > .claim > .claimName {
+    padding: 6px;
+    margin: 5px 0 5px 5px;
+}
+
+.Claims > .card-body > .claim > .claim-btn > .point {
+    padding: 10px;
+}
+
+.Claims > .card-body > .claim > .info {
+    position: relative;
+    display: inline-block;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    padding: 0 10px;
+}
+
+.Claims > .card-body > .claim > .info > .tooltip {
+    position: absolute;
+    visibility: hidden;
+    width: 150px;
+    background-color: #222222;
+    color: #fff;
+    z-index: 1;
+    top: -5px;
+    left: 110%;
+    line-height: 130%;
+}
+  
+.Claims > .card-body > .claim > .info > .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #222222 transparent transparent;
+  }
+
+.Claims > .card-body > .claim > .info:hover > .tooltip {
+    visibility: visible;
+}

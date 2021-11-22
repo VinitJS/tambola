@@ -1,0 +1,26 @@
+.Ticket {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin: auto;
+}
+
+.Ticket > .grid {
+    padding: 5px;
+    width: 330px;
+}
+
+.Ticket > .grid > .trow {
+    white-space: nowrap;
+}
+
+.Ticket > .grid > .trow > .tcell {
+    padding: 0;
+    width: 35px;
+    height: 30px;
+    margin: 1px;
+    font-size: 20px;
+    border: 1px solid var(--cred);
+    outline: none;
+}
