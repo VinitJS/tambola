@@ -147,7 +147,8 @@ const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, cl
                     claimList.slice(0, 11).map(claim =>
                         <div key={claim.name} className="claim w100pc frow faic fjcsb">
                             <button className="info">
-                                {svgs[claim.name]}
+                                {svgs[claim.name] ? svgs[claim.name] : <span role="img" aria-label="two" className="mrxs">☝</span>}
+                                
                                 <span className="tooltip ps brs">{claim.display}<br />{claim.description}</span>
                             </button>
                             {
