@@ -7,7 +7,8 @@ import thunk from 'redux-thunk';
 let middlewares = [thunk]; // logger, 
 
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));
-
 export const persistor = persistStore(store);
 
-export default { store, persistor };
+// Assign to a named variable before exporting
+const storeConfig = { store, persistor };
+export default storeConfig;

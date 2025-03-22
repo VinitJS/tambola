@@ -1,58 +1,56 @@
 import React, { useEffect } from 'react';
-import { setPlayFailure, setPlaySuccess } from '../../../../redux/playing/playing.actions';
 import { connect } from 'react-redux';
-import { getGameRef } from '../../../../utils/firebase';
-import Play from './Play';
+import { setPlayFailure, setPlaySuccess } from '../../../../redux/playing/playing.actions';
 import { updateRemWithReq } from '../../../../redux/game/game.actions';
+import { getGameRef } from '../../../../utils/firebase';
+
+import Play from './Play';
 
 const Participant = ({ gameId, setPlaySuccess, setPlayFailure, updateRemWithReq, myGameId, dReq }) => {
-
     useEffect(() => {
-        try {
-            const playRef = getGameRef(gameId.toString());
-            return playRef.onSnapshot(doc => {
-                if (doc.exists) {
-                    if (myGameId && gameId === myGameId.toString() && doc.data().dreq !== 0 && doc.data().dreq !== dReq) {
-                        updateRemWithReq(doc.data().dreq);
-                    } else {
-                        const { chances, claims, coins, gVersion, gameBy, c, totalPoints } = doc.data();
-                        const data = { chances, claims, coins, gVersion, gameBy, c, totalPoints };
-                        const playersArr = Object.entries(doc.data().players);
-                        data.players = playersArr.map(([key, value]) => ({ id: key, ...value })).sort((a, b) => (a.points < b.points) ? 1 : -1);
-                        data.playersNums = doc.data().playersNums;
-                        data.size = playersArr.length;
-                        data.gameId = gameId;
-                        data.isValidGame = true;
-                        setPlaySuccess(data);
-                    }
-                } else {
-                    setPlayFailure("Internet Connection Breaking.");
-                }
-            });
-        }
-        catch (error) {
-            setPlayFailure(error);
-        }
-    }, [gameId, setPlayFailure, setPlaySuccess, dReq, myGameId, updateRemWithReq]);
+        if (!gameId) return;
 
-    return (
-        <Play />
-    );
+        const playRef = getGameRef(gameId.toString());
+        const unsubscribe = playRef.onSnapshot(doc => {
+            if (!doc.exists) {
+                setPlayFailure("Internet Connection Breaking.");
+                return;
+            }
+
+            const data = doc.data();
+
+            if (myGameId && gameId === myGameId.toString() && data.dreq !== 0 && data.dreq !== dReq) {
+                updateRemWithReq(data.dreq);
+                return;
+            }
+
+            const { chances, claims, coins, gVersion, gameBy, c, players, playersNums } = data;
+            const playersArr = Object.entries(players).map(([id, value]) => ({ id, ...value }));
+
+            setPlaySuccess({
+                chances,
+                claims,
+                coins,
+                gVersion,
+                gameBy,
+                c,
+                players: playersArr.sort((b, a) => a.points - b.points),
+                playersNums,
+                size: playersArr.length,
+                gameId,
+                isValidGame: true,
+            });
+        });
+
+        return () => unsubscribe();
+    }, [gameId, myGameId, dReq, setPlayFailure, setPlaySuccess, updateRemWithReq]);
+
+    return <Play />;
 };
 
-const mapStateToProps = ({ game }) => (
-    {
-        myGameId: game.gameId,
-        dReq: game.dReq
-    }
-);
+const mapStateToProps = ({ game }) => ({
+    myGameId: game.gameId,
+    dReq: game.dReq,
+});
 
-const mapDispatchToProps = dispatch => (
-    {
-        setPlayFailure: message => dispatch(setPlayFailure(message)),
-        setPlaySuccess: data => dispatch(setPlaySuccess(data)),
-        updateRemWithReq: newDReq => dispatch(updateRemWithReq(newDReq))
-    }
-)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Participant);
+export default connect(mapStateToProps, { setPlayFailure, setPlaySuccess, updateRemWithReq })(Participant);

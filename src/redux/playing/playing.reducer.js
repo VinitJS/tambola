@@ -12,8 +12,7 @@ const INITIAL_STATE = {
     emo: ["front-facing_baby_chick", "badger-emoji", "bear-emoji", "blow-fish", "butterfly-emoji", "bear-emoji", "cat-face--v1", "chicken-emoji", "chimpanzee-emoji", "chipmunk", "crocodile", "dog-face", "duck-emoji", "eagle--v2", "flamingo-emoji", "fox-emoji", "frog-emoji", "gorilla-emoji", "hamster-emoji", "koala-emoji", "lion-emoji", "monkey-face--v1", "mouse-emoji", "owl-emoji", "panda-emoji", "otter-emoji", "penguin--v2", "rabbit-emoji", "rooster--v2", "raccoon", "rooster--v2", "turkey-emoji"],
     isValidGame: true,
     size: 0,
-    c: "",
-    totalPoints: 0
+    c: ""
 }
 
 const playReducer = (state = INITIAL_STATE, action) => {

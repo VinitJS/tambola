@@ -61,7 +61,7 @@ const INITIAL_STATE = {
         { name: "cone", display: "CONE", points: 6, description: "All 5 (top), 2nd-4th (middle), 3rd (bottom)." },
         { name: "navgraha", display: "NAVGRAHA", points: 6, description: "1st, 3rd, 5th (top, middle, bottom rows)." },
         { name: "border", display: "BORDER", points: 6, description: "All numbers on the border." },
-        { name: "oneleft", display: "ONE LEFT", points: 6, description: "Any 14 numbers (takes 2 chances)." },
+        { name: "oneleft", display: "ONE LEFT", points: 6, description: "Any 14 numbers (takes away 2 chances)." },
         { name: "fullHouse", display: "FULL HOUSE", points: 7, description: "All 15 numbers." }          
     ]
 }

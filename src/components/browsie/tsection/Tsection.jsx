@@ -15,19 +15,14 @@ const Tsection = ({ gameId, playId, gVersion, tVersion, id, name, v, p, createTi
         utter.volume = 1;
         utter.pitch = 1;
         utter.rate = 1;
-        utter.text = "You have limited chances to claim.";
-        if (size > 56) {
-            alert("Sorry! Max players limit is reached for this game.")
-            return
-        }
+        utter.text = "You have 6 chances to claim.";
         synth.speak(utter);
 
         let shouldReset = false;
         const playerId = players.find(player => player.id === id.toString());
-        if(!playerId) {
-            shouldReset = true;
-        }
-        createTicket(gVersion, gameId, id, name, v, p, shouldReset);
+        if(!playerId) shouldReset = true;
+        console.log(p)
+        createTicket(gVersion, gameId, id, name, v, p, 5, shouldReset, size);
     }
 
     return (
@@ -62,7 +57,7 @@ const mapStateToProps = ({ user, ticket, play }) => (
 
 const mapDispatchToProps = dispatch => (
     {
-        createTicket: (gVersion, gameId, userId, name, v, p, shouldReset) => dispatch(createTicket(gVersion, gameId, userId, name, v, p, shouldReset))
+        createTicket: (gVersion, gameId, userId, name, v, p, points, shouldReset) => dispatch(createTicket(gVersion, gameId, userId, name, v, p, points, shouldReset))
     }
 );
 

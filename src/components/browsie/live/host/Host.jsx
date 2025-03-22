@@ -1,28 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { setGameLoading } from '../../../../redux/game/game.actions';
+
 import Manage from '../../manage/Manage';
 import Invite from '../../invite/Invite';
-import { useEffect } from 'react';
-import { setGameLoading } from '../../../../redux/game/game.actions';
-import { connect } from 'react-redux';
 
 const Host = ({ setGameLoading }) => {
-
     useEffect(() => {
         setGameLoading(false);
     }, [setGameLoading]);
 
     return (
         <div className="Host w100pc">
-            <Invite />
             <Manage />
+            <Invite />
         </div>
     );
 };
 
-const mapDispatchToProps = dispatch => (
-    {
-        setGameLoading: bool => dispatch(setGameLoading(bool))
-    }
-)
-
-export default connect(null, mapDispatchToProps)(Host);
+export default connect(null, { setGameLoading })(Host);

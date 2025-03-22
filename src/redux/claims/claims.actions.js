@@ -48,7 +48,7 @@ export const resetClaims = () => (
     }
 )
 
-export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, columnDensity, size, xx) => (
+export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, columnDensity, xx, size) => (
     (dispatch) => {
         try {
             dispatch(setClaiming(true));
@@ -672,31 +672,23 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                     dispatch(setClaimingError("No matching claims!"));
                     break;
             }
-            if (!failingCondition) {
-                if (xx) {
-                    points = points + claim.points
-                }
-                saveClaim(gameId, claim.name, userName, userId, points, size)
-                    .then(function () {
-                        if (claim.name === "oneleft") {
-                            dispatch(setClaimedSuccess(2));
-                        } else {
-                            dispatch(setClaimedSuccess(1));
-                        }
-                        if (size > 3) {
-                            if (claim.name === "fullHouse") {
-                                dispatch(increaseUserV(claim.points));
-                            } else {
-                                dispatch(increasePoints(claim.points));
-                            }
-                        }
-                    }).catch(function (error) {
-                        alert(error);
-                        dispatch(setClaimingError(error));
-                    });
-            } else {
+            if (failingCondition) {
                 alert("Bogus Claim!");
                 dispatch(setBogusClaim());
+            } else {
+                saveClaim(
+                    gameId,
+                    claim.name,
+                    userName,
+                    userId,
+                    xx ? points + claim.points : points
+                ).then(function () {
+                    dispatch(setClaimedSuccess(claim.name === "oneleft" ? 2 : 1));
+                    if(size > 3) dispatch(claim.name === "fullHouse" ? increaseUserV(claim.points) : increasePoints(claim.points));
+                }).catch(function (error) {
+                    alert(error);
+                    dispatch(setClaimingError(error));
+                });
             }
         } catch (error) {
             dispatch(setClaimingError(error.message));

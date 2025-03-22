@@ -1,25 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-import './Navbar.css';
+import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 
+import './Navbar.css';
+
 const Navbar = ({ gameId }) => {
+    const history = useHistory();
 
     return (
-        <div className="Navbar w100pc">
+        <nav className="Navbar w100pc">
             <div className="nav frow fjcsb">
-                <Link to={gameId ? `${gameId}` : "/"} className="btn-link pm cr b">My Tambola Game</Link>
-                <Link to="/user" className="btn-link pm cb b">Change Name</Link>
+                <button onClick={() => history.push(gameId ? `/${gameId}` : "/")} className="btn pm cr b w100pc mxs">
+                    My Tambola Game
+                </button>
+                <button onClick={() => history.push("/user")} className="btn pm cb b w100pc mxs">
+                    Change Name
+                </button>
             </div>
-        </div>
+        </nav>
     );
 };
 
-const mapStateToProps = ({ game }) => (
-    {
-        gameId: game.gameId
-    }
-);
+const mapStateToProps = ({ game }) => ({
+    gameId: game.gameId
+});
 
 export default connect(mapStateToProps)(Navbar);

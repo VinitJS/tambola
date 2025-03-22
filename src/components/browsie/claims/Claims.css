@@ -6,7 +6,7 @@
 
 .Claims > .card-body > .claim > .claimName {
     padding: 6px;
-    margin: 5px 0 5px 5px;
+    margin: 5px 0px 5px 0px;
 }
 
 .Claims > .card-body > .claim > .claim-btn > .point {
@@ -29,8 +29,8 @@
     background-color: #222222;
     color: #fff;
     z-index: 1;
-    top: -5px;
-    left: 110%;
+    top: -10px;
+    left: 85%;
     line-height: 130%;
 }
   

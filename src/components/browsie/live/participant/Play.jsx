@@ -10,34 +10,33 @@ import Commentary from '../../tsection/commentary/Commentary';
 import Rules from '../../rules/Rules';
 
 const Play = ({ gameId, isValidGame }) => {
+    if (!isValidGame) return <Notfound />;
+
     return (
         <div className="fcol faic">
-            {
-                isValidGame
-                    ?
-                    <>
-                        <Rules />
-                        <Drawn />
-                        <Tsection gameId={gameId} />
-                        <Claims gameId={gameId} />
-                        <Players gameId={gameId} />
-                        <div className="tac mtm mbm">
-                            <p className="ps bcy brxl">Game Created by <a href="https://www.linkedin.com/in/khandelwalvinit/" target="_blank" rel="noopener noreferrer" className="btn-link">Vinit Khandelwal</a></p>
-                        </div>
-                        <Commentary />
-                    </>
-                    :
-                    <Notfound />
-            }
+            <Rules />
+            <Drawn />
+            <Tsection gameId={gameId} />
+            <Claims gameId={gameId} />
+            <Players gameId={gameId} />
+            <div className="tac mtm mbm">
+                <p className="ps bcy brxl">
+                    Game Created by{' '}
+                    <a
+                        href="https://www.linkedin.com/in/khandelwalvinit/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-link"
+                    >
+                        Vinit Khandelwal
+                    </a>
+                </p>
+            </div>
+            <Commentary />
         </div>
     );
 };
 
-const mapStateToProps = ({ play }) => (
-    {
-        isValidGame: play.isValidGame,
-        gameId: play.gameId
-    }
-);
+const mapStateToProps = ({ play: { isValidGame, gameId } }) => ({ isValidGame, gameId });
 
 export default connect(mapStateToProps)(Play);

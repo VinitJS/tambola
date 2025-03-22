@@ -2,6 +2,7 @@ import TicketActionTypes from "./ticket.types";
 import { resetClaimedCount } from "../claims/claims.actions";
 import { setChosenDraw } from "../drawing/drawing.actions";
 import { joinGame } from "../../utils/firebase";
+import { increasePoints } from "../user/user.actions";
 
 export const toggleTick = (index, i, ticketNumber) => (
     {
@@ -10,7 +11,7 @@ export const toggleTick = (index, i, ticketNumber) => (
     }
 )
 
-export const createTicketSuccess = (myTicket, columnDensity, tVersion, myTNums, myTicket1, columnDensity1, myTNums1) => (
+export const createTicketSuccess = (myTicket, columnDensity, tVersion, myTNums) => (
     {
         type: TicketActionTypes.SET_MYTICKET,
         payload: { myTicket, myTNums, columnDensity, tVersion, creatingTicket: false }
@@ -37,7 +38,7 @@ export const setCreatingTicket = (bool) => (
     }
 )
 
-export const createTicket = (tVersion, gameId, userId, name, v, p, shouldReset) => (
+export const createTicket = (tVersion, gameId, userId, name, v, p, points, shouldReset, size) => (
     (dispatch) => {
         dispatch(setCreatingTicket(true));
         const columnCount = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
@@ -110,9 +111,10 @@ export const createTicket = (tVersion, gameId, userId, name, v, p, shouldReset) 
             }
         }
 
-        joinGame(gameId, userId, name, v, p, myTNums, shouldReset)
+        joinGame(gameId, userId, name, v, p, points, size)
             .then(() => {
                 dispatch(createTicketSuccess(myT, columnCount, tVersion, myTNums));
+                if(size > 3) dispatch(increasePoints(points))
                 if(shouldReset) {
                     dispatch(resetClaimedCount());
                     dispatch(setChosenDraw(true));
