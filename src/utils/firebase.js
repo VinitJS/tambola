@@ -90,10 +90,4 @@ export const joinGame = (gameId, userId, name, v, p, myTNums, shouldReset) => {
     return gameRef.update(updateBody);
 }
 
-export const clap = (gameId, playerId, userId) => {
-    return getGameRef(gameId).update({
-        [`players.${playerId}.clap`]: firebase.firestore.FieldValue.arrayUnion(userId)
-    })
-}
-
 export default firebase;

@@ -13,9 +13,7 @@ const INITIAL_STATE = {
     isValidGame: true,
     size: 0,
     c: "",
-    totalPoints: 0,
-    clapLoading: false,
-    clapped: []
+    totalPoints: 0
 }
 
 const playReducer = (state = INITIAL_STATE, action) => {
@@ -34,21 +32,6 @@ const playReducer = (state = INITIAL_STATE, action) => {
         case PlayActionTypes.RESET_PLAY:
             return {
                 ...INITIAL_STATE
-            }
-        case PlayActionTypes.SET_CLAP_LOADING:
-            return {
-                ...state,
-                clapLoading: action.payload
-            }
-        case PlayActionTypes.ADD_TO_CLAPPED:
-            return {
-                ...state,
-                clapped: [...state.clapped, action.payload]
-            }
-        case PlayActionTypes.RESET_CLAPPED:
-            return {
-                ...state,
-                clapped: []
             }
         default:
             return state;

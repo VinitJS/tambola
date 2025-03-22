@@ -578,7 +578,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         failingCondition = false;
                     }
                     break;
-                case "pyramid":
+                case "triangle":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
                     if (ticketList[2][1]
                         && ticketList[6][1]
@@ -601,7 +601,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         failingCondition = false;
                     }
                     break;
-                case "pi":
+                case "cone":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
                     if (ticketList[0][1]
                         && ticketList[1][1]
@@ -609,18 +609,18 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && ticketList[3][1]
                         && ticketList[4][1]
                         && ticketList[6][1]
+                        && ticketList[7][1]
                         && ticketList[8][1]
-                        && ticketList[11][1]
-                        && ticketList[13][1]
+                        && ticketList[12][1]
                         && coins.includes(ticketList[0][0])
                         && coins.includes(ticketList[1][0])
                         && coins.includes(ticketList[2][0])
                         && coins.includes(ticketList[3][0])
                         && coins.includes(ticketList[4][0])
                         && coins.includes(ticketList[6][0])
+                        && coins.includes(ticketList[7][0])
                         && coins.includes(ticketList[8][0])
-                        && coins.includes(ticketList[11][0])
-                        && coins.includes(ticketList[13][0])) {
+                        && coins.includes(ticketList[12][0])) {
                         failingCondition = false;
                     }
                     break;

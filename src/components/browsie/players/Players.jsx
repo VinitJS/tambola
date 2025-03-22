@@ -1,10 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { addToClapped, setClap } from '../../../redux/playing/playing.actions';
 
 import './Players.css';
 
-const Players = React.memo(({ gameId, players, totalCollected, totalPoints, userId, clapLoading, clapped, setClap, addToClapped }) => {
+const Players = React.memo(({ gameId, players, totalCollected, totalPoints, userId }) => {
 
     const emo = useRef(["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐵", "🙈", "🙉", "🙊", "🐒", "🐔", "🐧", "🐦", "🐤", "🐣", "🐥", "🦆", "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦄", "🐝", "🐛", "🦋", "🐌", "🐞", "🐜", "🦟", "🦗", "🕷", "🦂", "🐢", "🐍", "🦎", "🦖", "🦕", "🐙", "🦑", "🦐", "🦞", "🦀", "🐡", "🐠", "🐟", "🐬", "🐳", "🐋", "🦈", "🐊", "🐅", "🐆", "🦓", "🦍", "🐘", "🦛", "🦏", "🐪", "🐫", "🦒", "🦘", "🐃", "🐂", "🐄", "🐎", "🐖", "🐏", "🐑", "🦙", "🐐", "🦌", "🐕", "🐩", "🐈", "🐓", "🦃", "🦚", "🦜", "🦢", "🐇", "🦝", "🦡", "🐁", "🐀", "🐿", "🦔", "🐉", "🐲"]);
     const leader = useRef("");
@@ -25,15 +24,7 @@ const Players = React.memo(({ gameId, players, totalCollected, totalPoints, user
                 leader.current = players[0].id;
             }
         }
-        const player = players.find(p => p.id === userId);
-        if(player?.clap?.length > clapped?.length) {
-            const clappedPlayerId = player.clap.find(p => !clapped.includes(p));
-            const clappedPlayer = players.find(p => p.id === clappedPlayerId);
-            utter.current.text = `${clappedPlayer.name} clapped for you.`;
-            synth.current.speak(utter.current);
-            addToClapped(clappedPlayerId);
-        }
-    }, [addToClapped, clapped, players, userId]);
+    }, [players, userId]);
 
     return (
         <div className="Players fcol faic">
@@ -57,16 +48,7 @@ const Players = React.memo(({ gameId, players, totalCollected, totalPoints, user
                         </div>
                         <p className="points bcy tac">{totalPoints > 0 ? Math.round((player.points/totalPoints)*totalCollected) : 0}</p>
                     </div>
-                    {
-                        !clapLoading && <div className="clap frow faic">
-                            <button onClick={() => ((player.id===userId || (player.clap && player.clap.includes(userId))) ? null : (setClap(gameId, player.id, userId)))}>
-                                <span className="avatar" role="img" aria-label="avatar">👏</span>
-                            </button>
-                            <p>{player.clap?.length}</p>
-                        </div>
-                    }
-                    </div>
-                )
+                </div>)
             }
         </div >
     );
@@ -77,17 +59,10 @@ const mapStateToProps = ({ play, user }) => (
         players: play.players,
         totalCollected: play.size*50,
         totalPoints: play.totalPoints,
-        userId: user.id.toString(),
-        clapLoading: play.clapLoading,
-        clapped: play.clapped
+        userId: user.id.toString()
     }
 );
 
-const mapDispatchToProps = dispatch => (
-    {
-        setClap: (gameId, playerId, userId) => dispatch(setClap(gameId, playerId, userId)),
-        addToClapped: (id) => dispatch(addToClapped(id))
-    }
-)
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Players);

@@ -6,11 +6,9 @@ const INITIAL_STATE = {
     gameId: null,
     speed: 10000,
     counting: false,
-    remaining: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89],
+    remaining: [],
     dReqArr: [],
-    dReq: 0,
-    calledUpto: -1,
-    playersNumsCalledCount: {}
+    dReq: 0
 }
 
 const gameReducer = (state = INITIAL_STATE, action) => {
@@ -30,7 +28,11 @@ const gameReducer = (state = INITIAL_STATE, action) => {
         case GameActionTypes.SET_GAME_SUCCESS: // created new game successfully
             return {
                 ...INITIAL_STATE,
-                ...action.payload
+                ...action.payload,
+                gameLoading: false,
+                counting: false,
+                dReqArr: [],
+                dReq: 0
             }
 
         case GameActionTypes.SET_GAME_ERROR: // error creating game
@@ -63,9 +65,18 @@ const gameReducer = (state = INITIAL_STATE, action) => {
             }
 
         case GameActionTypes.UPDATE_GAME_REMAINING: // update remaining
+            let newRem, newDReq;
+            if (state.dReqArr.length > 0) {
+                newRem = action.payload.filter(num => state.dReqArr[0] !== num).concat(state.dReqArr[0]);
+                newDReq = state.dReqArr.splice(1);
+            } else {
+                newRem = action.payload;
+                newDReq = state.dReqArr;
+            }
             return {
                 ...state,
-                ...action.payload
+                remaining: [...newRem],
+                dReqArr: newDReq
             }
 
         case GameActionTypes.RESET_GAME_SUCCESS: // restart game successfully

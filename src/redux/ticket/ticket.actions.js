@@ -2,7 +2,6 @@ import TicketActionTypes from "./ticket.types";
 import { resetClaimedCount } from "../claims/claims.actions";
 import { setChosenDraw } from "../drawing/drawing.actions";
 import { joinGame } from "../../utils/firebase";
-import { resetClapped } from "../playing/playing.actions";
 
 export const toggleTick = (index, i, ticketNumber) => (
     {
@@ -117,7 +116,6 @@ export const createTicket = (tVersion, gameId, userId, name, v, p, shouldReset) 
                 if(shouldReset) {
                     dispatch(resetClaimedCount());
                     dispatch(setChosenDraw(true));
-                    dispatch(resetClapped());
                 }
             }).catch((error) => {
                 setJoinFailure(error.message);

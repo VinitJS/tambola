@@ -18,6 +18,12 @@ const drawReducer = (state = INITIAL_STATE, action) => {
                 dchance: action.payload,
                 processChosen: false
             }
+        case DrawActionTypes.SET_CHOSEN_DRAW_RESET:
+            return {
+                ...state,
+                dchance: true,
+                processChosen: false
+            }
         default:
             return state;
     }

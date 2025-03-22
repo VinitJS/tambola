@@ -15,6 +15,12 @@ export const setChosenDraw = (bool) => (
     }
 )
 
+export const chosenDrawReset = () => (
+    {
+        type: DrawingActionTypes.SET_CHOSEN_DRAW_RESET
+    }
+)
+
 export const addNewDraw = (gameId, num, statement, userId) => ( // called from drawn
     (dispatch) => {
         dispatch(setProcessingDraw(true));
@@ -25,5 +31,4 @@ export const addNewDraw = (gameId, num, statement, userId) => ( // called from d
                 dispatch(setProcessingDraw(false));
                 alert("Unable to get your chosen number now. Try again later!")
             })
-    }
-);
+    });

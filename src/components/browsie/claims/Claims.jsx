@@ -53,9 +53,9 @@ import { ReactComponent as SinglesIcon } from '../../../assets/claims/singles.sv
 import { ReactComponent as ZebraIcon } from '../../../assets/claims/zebra.svg';
 import { ReactComponent as NewsIcon } from '../../../assets/claims/news.svg';
 import { ReactComponent as NavgrahaIcon } from '../../../assets/claims/navgraha.svg';
-import { ReactComponent as PyramidIcon } from '../../../assets/claims/pyramid.svg';
+import { ReactComponent as TriangleIcon } from '../../../assets/claims/triangle.svg';
+import { ReactComponent as ConeIcon } from '../../../assets/claims/cone.svg';
 import { ReactComponent as TwolanesIcon } from '../../../assets/claims/twolanes.svg';
-import { ReactComponent as PiIcon } from '../../../assets/claims/pi.svg';
 import { ReactComponent as SidesIcon } from '../../../assets/claims/sides.svg';
 
 const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, claims, myTicket, columnDensity, chances, gVersion, tVersion, claimedCount, size, xx }) => {
@@ -112,8 +112,8 @@ const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, cl
         zebra: <ZebraIcon className="mrs" />,
         news: <NewsIcon className="mrs" />,
         navgraha: <NavgrahaIcon className="mrs" />,
-        pyramid: <PyramidIcon className="mrs" />,
-        pi: <PiIcon className="mrs" />
+        triangle: <TriangleIcon className="mrs" />,
+        cone: <ConeIcon className="mrs" />
     }
 
     const claimIt = (claim) => {

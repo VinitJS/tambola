@@ -3,71 +3,40 @@ import { connect } from 'react-redux';
 import firebase, { getGameRef } from '../../../../utils/firebase';
 import { setDrawFailure, updateRemaining, setCounting, setChancesFailure } from '../../../../redux/game/game.actions';
 
-const Counting = React.memo(({ speed, updateRemaining, setDrawFailure, setCounting, remaining, gameId, counting, setChancesFailure, playersNums = {}, calledUpto, playersNumsCalledCount }) => {
+const Counting = React.memo(({ speed, updateRemaining, setDrawFailure, setCounting, remaining, gameId, counting, setChancesFailure, playersLen }) => {
 
     const timeout = useRef()
 
     useEffect(() => {
         if (counting) {
-            console.log("COUNTING IS TRUE: ", counting)
-            const pncc = { ...playersNumsCalledCount };
-            if(calledUpto > 15) {
-                console.log("CALLEDUPTO IS MORE THAN 14: ", calledUpto)
-                setDrawFailure("All numbers are already drawn.");
-                return;
-            }
-            console.log("CALLEDUPTO IS LESS THAN 14: ", calledUpto)
-            const players = Object.entries(playersNums).map(([key, value]) => ({ id: key, nums: value }))
-            let behindPlayers = players.filter(p => pncc[p.id] === undefined);
-            let call, pickedPlayer;
-            if (behindPlayers.length > 0) {
-                console.log("PLAYERS WITH UNDEFINED", behindPlayers.length)
-                pickedPlayer = behindPlayers[Math.floor(Math.random() * behindPlayers.length)];
-                call = pickedPlayer.nums[0];
-                pncc[pickedPlayer.id] = 0;
+            if (remaining.length > 0) {
+                const tempRemaining = [...remaining];
+                timeout.current = setTimeout(() => {
+                    const chosen = tempRemaining.pop();
+                    if (chosen) {
+                        const gameRef = getGameRef(gameId.toString());
+                        gameRef.update({
+                            coins: firebase.firestore.FieldValue.arrayUnion(chosen)
+                        }).then(res => {
+                            updateRemaining(tempRemaining);
+                        }).catch(error => {
+                            setDrawFailure(error.message);
+                        });
+                    } else {
+                        setDrawFailure("Problem drawing numbers.");
+                    }
+                }, speed);
             } else {
-                console.log("ALL PLAYERS CALLED AT LEAST ONCE: ", behindPlayers.length)
-                behindPlayers = players.filter(p => pncc[p.id] < calledUpto);
-                if (behindPlayers.length > 0) {
-                    console.log("PLAYERS BEHIND CALLEDUPTO: ", behindPlayers.length)
-                    pickedPlayer = behindPlayers[Math.floor(Math.random() * behindPlayers.length)];
-                    call = pickedPlayer.nums[pncc[pickedPlayer.id]];
-                    pncc[pickedPlayer.id]++;
-                } else {
-                    console.log("ALL PLAYERS AT CALLEDUPTO: ", calledUpto)
-                    calledUpto++;
-                    console.log("calledUpto: ", calledUpto);
-                    updateRemaining(calledUpto, pncc);
-                    return;
-                }
+                setDrawFailure("All numbers are already drawn.");
             }
-            timeout.current = setTimeout(() => {
-                if (call) {
-                    const gameRef = getGameRef(gameId.toString());
-                    gameRef.update({
-                        coins: firebase.firestore.FieldValue.arrayUnion(call)
-                    }).then(() => {
-                        console.log("HERE: ", calledUpto)
-                        updateRemaining(calledUpto, pncc);
-                    }).catch(error => {
-                        console.log("FAILED")
-                        setDrawFailure(error.message);
-                    });
-                } else {
-                    setDrawFailure("Problem drawing numbers.");
-                }
-            }, speed);
         }
-    }, [counting, gameId, setDrawFailure, speed, updateRemaining, calledUpto, playersNumsCalledCount])
+    }, [counting, gameId, remaining, setDrawFailure, speed, updateRemaining])
 
     const startCounting = async () => {
-        if (calledUpto === -1) {
+        if (remaining.length > 88) {
             const gameRef = getGameRef(gameId.toString());
-            let chances = Math.round(58 / Object.keys(playersNums).length);
-            if(chances > 6) chances = 6;
-            if(chances < 3) chances = 3;
             gameRef.update({
-                chances
+                chances: playersLen < 10 ? 6 : playersLen < 15 ? 5 : playersLen < 20 ? 4 : 3
             }).then(() => {
                 setCounting(true);
             }).catch((error) => {
@@ -102,15 +71,13 @@ const mapStateToProps = ({ game, play }) => (
         remaining: game.remaining,
         gameId: game.gameId,
         counting: game.counting,
-        calledUpto: game.calledUpto,
-        playersNumsCalledCount: game.playersNumsCalledCount,
-        playersNums: play.playersNums
+        playersLen: play.players.length
     }
 );
 
 const mapDispatchToProps = dispatch => (
     {
-        updateRemaining: (calledUpto, pncc) => dispatch(updateRemaining(calledUpto, pncc)),
+        updateRemaining: (remaining) => dispatch(updateRemaining(remaining)),
         setDrawFailure: (message) => dispatch(setDrawFailure(message)),
         setChancesFailure: (message) => dispatch(setChancesFailure(message)),
         setCounting: (bool) => dispatch(setCounting(bool))
