@@ -12,9 +12,9 @@ const Drawn = React.memo(({ coins, gameBy, gameId, size, dchance, addNewDraw, my
     }, [coins]);
 
     const confirmDraw = useCallback((index) => {
-        const points = -5
-        if (window.confirm(`It takes away ${points*10} points. Demand ${index} next?`)) {
-            addNewDraw(gameId, index, `${name} demands ${index}`, userId, points, size);
+        const points = 5
+        if (window.confirm(`It takes away ${points*10} points. Want ${index} next?`)) {
+            addNewDraw(gameId, index, `${name} demands ${index}`, userId, -points, size);
         }
     }, [addNewDraw, gameId, name, userId, size]);
 

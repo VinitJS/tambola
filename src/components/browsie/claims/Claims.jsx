@@ -57,7 +57,7 @@ import { ReactComponent as ConeIcon } from '../../../assets/claims/cone.svg';
 import { ReactComponent as TwolanesIcon } from '../../../assets/claims/twolanes.svg';
 import { ReactComponent as SidesIcon } from '../../../assets/claims/sides.svg';
 
-const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, claims, myTicket, columnDensity, chances, gVersion, tVersion, claimedCount, xx }) => {
+const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, claims, myTicket, columnDensity, chances, gVersion, size, tVersion, claimedCount, xx }) => {
 
     const svgs = {
         breakfast: <BreakfastIcon className="mrs" />,
@@ -118,7 +118,7 @@ const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, cl
     const claimIt = (claim) => {
         const remChances = chances - claimedCount;
         if (remChances > 0) {
-            claimClaim(gameId, coins, claim, id, name, myTicket, columnDensity, xx);
+            claimClaim(gameId, coins, claim, id, name, myTicket, columnDensity, xx, size);
         } else {
             alert("You have 0 chances left!")
         }
@@ -127,7 +127,7 @@ const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, cl
     const claimOneLeft = (claim) => {
         const remChances = chances - claimedCount;
         if (remChances > 1) {
-            claimClaim(gameId, coins, claim, id, name, myTicket, columnDensity, xx);
+            claimClaim(gameId, coins, claim, id, name, myTicket, columnDensity, xx, size);
         } else {
             alert("You need 2 chances to claim ONE LEFT!");
         }
@@ -298,7 +298,7 @@ const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, cl
                                     <span className="point bco cw">{fhClaim.points * points_multiplier}{xx && `+${fhClaim.points * points_multiplier}`}</span>
                                 </button>
                                 {
-                                    <span role="img" aria-label="star" className="mlxs">⭐</span>
+                                    size > 3 && <span role="img" aria-label="star" className="mlxs">⭐</span>
                                 }
                             </>
                     }
@@ -321,6 +321,7 @@ const mapStateToProps = ({ claims, user, play, ticket }) => (
         claims: play.claims,
         chances: play.chances,
         gVersion: play.gVersion,
+        size: play.size,
         tVersion: ticket.tVersion,
         myTicket: ticket.myTicket,
         columnDensity: ticket.columnDensity
@@ -329,7 +330,7 @@ const mapStateToProps = ({ claims, user, play, ticket }) => (
 
 const mapDispatchToProps = dispatch => (
     {
-        claimClaim: (gameId, coins, claim, id, name, myTicket, columnDensity, xx) => dispatch(claimClaim(gameId, coins, claim, id, name, myTicket, columnDensity, xx))
+        claimClaim: (gameId, coins, claim, id, name, myTicket, columnDensity, xx, size) => dispatch(claimClaim(gameId, coins, claim, id, name, myTicket, columnDensity, xx, size))
     }
 )
 
