@@ -35,13 +35,10 @@ const Players = React.memo(({ players, size, userId }) => {
                     <div className="player frow faic bcly pxs">
                         <span className="avatar mxs" role="img" aria-label={`Avatar of ${player.name}`}>{emo.current[player.p % emo.current.length]}</span>
                         <div className="fcol faic">
-                            {
-                                size > 3 &&
-                                <div className="fss mrxs">
-                                    {player.p > 0 && <span className="mrs">{player.p}</span>}
-                                    {player.v > 0 && <span role="img" aria-label="star">{player.v}⭐</span>}
-                                </div>
-                            }
+                            <div className="fss mrxs">
+                                {player.p > 0 && <span className="mrs">{player.p}</span>}
+                                {player.v > 0 && <span role="img" aria-label="star">{player.v}⭐</span>}
+                            </div>
                             <p className="mrxs">{player.name?.substring(0, 25)}</p>
                         </div>
                         <p className="points bcy tac">

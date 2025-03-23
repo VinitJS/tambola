@@ -15,7 +15,7 @@ const INITIAL_STATE = {
         { name: "bottomFirst", display: "BOTTOM FIRST", points: 1, description: "1st number, bottom row." },
         { name: "bottomCenter", display: "BOTTOM CENTER", points: 1, description: "3rd number, bottom row." },
         { name: "bottomLast", display: "BOTTOM LAST", points: 1, description: "5th number, bottom row." },
-        { name: "twin", display: "TWIN", points: 1, description: "Any of 11, 22, 33, ..., 88." },
+        { name: "twin", display: "TWIN", points: 1, description: "Any of 11, 22, 33, 44, 55, 66, 77, 88." },
         { name: "zerox", display: "2 OF UNITS", points: 2, description: "Any 2 single-digit numbers." },
         { name: "onex", display: "2 OF 10s", points: 2, description: "Any 2 numbers in the 10s." },
         { name: "twox", display: "2 OF 20s", points: 2, description: "Any 2 numbers in the 20s." },
