@@ -136,7 +136,7 @@ const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, cl
     ]
     const emojis = {
         early: <span role="img" className="mrxs fsxl">☝</span>,
-        twin: <span role="img" className="mrxs fsxl">✌️</span>,
+        twin: <span role="img" className="mrxs fsxl">👯</span>,
         earlyfive: <span role="img" className="mrxs fsxl">🖐</span>,
         earlyten: <span role="img" className="mrxs fsxl">🙌</span>,
         oneleft: <span role="img" className="mrxs fsxl">🤌</span>
