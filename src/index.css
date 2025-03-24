@@ -35,6 +35,10 @@ body {
   background-size: 200px;
 }
 
+ul {
+  padding-left: 1rem; /* Removes default padding */
+}
+
 .title {
   font-family: 'Sriracha', cursive;
 }

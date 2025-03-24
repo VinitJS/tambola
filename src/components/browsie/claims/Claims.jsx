@@ -113,14 +113,14 @@ const svgs = {
     cone: <ConeIcon className="mrs" />
 }
 
-const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, claims, myTicket, columnDensity, chances, gVersion, size, tVersion, claimedCount, xx }) => {
+const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, claims, myTicket, columnDensity, chances, gVersion, size, tVersion, claimedCount }) => {
 
     const claimIt = (points, claim) => {
         const remChances = chances - claimedCount;
         const required = claim.name === "oneleft" ? 1 : 0;
         let warn = claim.name === "oneleft" ? "Need 2 chances to claim ONE LEFT! " : "";
         warn = warn + `You have ${remChances} chance left!`;
-        remChances > required ? claimClaim(gameId, coins, points, claim, id, name, myTicket, columnDensity, xx, size) : alert(warn);
+        remChances > required ? claimClaim(gameId, coins, points, claim, id, name, myTicket, columnDensity, size, claimedCount) : alert(warn);
     }
     const points_multiplier = 10
     const emojis = {
@@ -150,13 +150,13 @@ const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, cl
                                             claims[claim.name]
                                                 ? <span className="claimName bclst brs fgr1 op50pc">{claims[claim.name]?.substring(0, 20)}</span>
                                                 : <>
-                                                    <button disabled={isClaiming} className="claim-btn btn btn-y frow fjcsb faic fgr1" 
+                                                    <button disabled={claimedCount > (claim.name === "oneleft" ? 4 : 5) || isClaiming} className="claim-btn btn btn-y frow fjcsb faic fgr1" 
                                                         onClick={() => (gVersion === tVersion && chances !== 0) ? claimIt(points, claim) : alert("Claims will be active after game starts.")}>
                                                         <span className="ps fgr1">{claim.display}</span>
                                                         <span className="point bco cw">
                                                             {points * points_multiplier}
-                                                            {xx && `+${points * points_multiplier}`}
                                                             {claim.name === "oneleft" && `+${(points-1) * points_multiplier}`}
+                                                            {claimedCount === (claim.name === "oneleft" ? 4 : 5) && `+${points * points_multiplier}`}
                                                         </span>
                                                     </button>
                                                     {
@@ -180,7 +180,6 @@ const mapStateToProps = ({ claims, user, play, ticket }) => (
         claimList: claims.claimList,
         isClaiming: claims.isClaiming,
         claimedCount: claims.claimedCount,
-        xx: claims.xx,
         id: user.id,
         name: user.name,
         gameId: play.gameId,
@@ -197,7 +196,7 @@ const mapStateToProps = ({ claims, user, play, ticket }) => (
 
 const mapDispatchToProps = dispatch => (
     {
-        claimClaim: (gameId, coins, points, claim, id, name, myTicket, columnDensity, xx, size) => dispatch(claimClaim(gameId, coins, points, claim, id, name, myTicket, columnDensity, xx, size))
+        claimClaim: (gameId, coins, points, claim, id, name, myTicket, columnDensity, size, claimedCount) => dispatch(claimClaim(gameId, coins, points, claim, id, name, myTicket, columnDensity, size, claimedCount))
     }
 )
 

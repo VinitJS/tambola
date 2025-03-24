@@ -15,7 +15,7 @@ const Rules = React.memo(() => {
                 </li>
                 <li className="frow mbm">
                     <span role="img" aria-label="first claim bonus" className="fsxl">🤟</span>
-                    <p className="mlm">Get double points on first claim</p>
+                    <p className="mlm">Get double points on your Last claim</p>
                 </li>
                 <li className="frow mbm">
                     <span role="img" aria-label="one left claim" className="fsxl">✌</span>

@@ -3,7 +3,6 @@ import ClaimsActionTypes from './claims.types';
 const INITIAL_STATE = {
     isClaiming: false,
     claimedCount: 0,
-    xx: true,
     claimList: {
         1: [
             { name: "early", display: "EARLY", description: "Any 1 number." },
@@ -91,8 +90,7 @@ const claimsReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 isClaiming: false,
-                claimedCount: state.claimedCount + action.payload,
-                xx: false
+                claimedCount: state.claimedCount + action.payload
             }
         case ClaimsActionTypes.SET_CLAIMING_ERROR:
             return {
@@ -103,7 +101,6 @@ const claimsReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 isClaiming: false
-                // claimedCount: state.claimedCount + 1
             }
         case ClaimsActionTypes.RESET_CLAIMED_COUNT:
             return {

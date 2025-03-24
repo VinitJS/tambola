@@ -21,7 +21,6 @@ const Tsection = ({ gameId, playId, gVersion, tVersion, id, name, v, p, createTi
         let shouldReset = false;
         const playerId = players.find(player => player.id === id.toString());
         if(!playerId) shouldReset = true;
-        console.log(p)
         createTicket(gVersion, gameId, id, name, v, p, 5, shouldReset, size);
     }
 

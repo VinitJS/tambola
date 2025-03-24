@@ -41,7 +41,7 @@ export const resetClaims = () => (
     }
 )
 
-export const claimClaim = (gameId, coins, points, claim, userId, userName, myTicket, columnDensity, xx, size) => (
+export const claimClaim = (gameId, coins, points, claim, userId, userName, myTicket, columnDensity, size, claimedCount) => (
     (dispatch) => {
         try {
             dispatch(setClaiming(true));
@@ -50,7 +50,6 @@ export const claimClaim = (gameId, coins, points, claim, userId, userName, myTic
             let failingCondition = true;
             switch (claim.name) {
                 case "early":
-                    console.log(markedListValidNums)
                     markedListValidNums = myTicket.flat().filter(ele => Array.isArray(ele) && ele[1] && coins.includes(ele[0]));
                     if (markedListValidNums.length > 0) failingCondition = false;
                     break;
@@ -100,8 +99,8 @@ export const claimClaim = (gameId, coins, points, claim, userId, userName, myTic
                     if (markedListValidNums.length > 4) failingCondition = false;
                     break;
                 case "lucky":
-                    ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (coins.length > 12 && ticketList.every(cell => !coins.slice(0, 13).includes(cell[0]))) failingCondition = false;
+                    ticketList = myTicket.flat().filter(ele => ele !== -1).map(([a, b]) => a);
+                    if (coins.length > 12 && ticketList.every(cell => !coins.slice(0, 13).includes(cell))) failingCondition = false;
                     break;
                 case "zerox":
                     count = 0;
@@ -560,16 +559,14 @@ export const claimClaim = (gameId, coins, points, claim, userId, userName, myTic
                 alert("Bogus Claim!");
                 dispatch(setBogusClaim());
             } else {
-                console.log("HERE")
                 saveClaim(
                     gameId,
                     claim.name,
                     userName,
                     userId,
-                    xx ? points * 2 : points,
+                    claimedCount === (claim.name === "oneleft" ? 4 : 5) ? points * 2 : points,
                     size
                 ).then(function () {
-                    console.log("HERE")
                     dispatch(setClaimedSuccess(claim.name === "oneleft" ? 2 : 1));
                     if(size > 3) dispatch(claim.name === "fullHouse" ? increaseUserV(points) : increasePoints(points));
                 }).catch(function (error) {
