@@ -37,6 +37,7 @@ body {
 
 ul {
   padding-left: 1rem; /* Removes default padding */
+  list-style-position: inside; /* Moves bullet points inside */
 }
 
 .title {
