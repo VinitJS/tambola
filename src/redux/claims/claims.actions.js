@@ -2,13 +2,6 @@ import ClaimsActionTypes from "./claims.types";
 import { saveClaim } from "../../utils/firebase";
 import { increaseUserV, increasePoints } from "../user/user.actions";
 
-export const setClaimsSuccess = (claimList) => (
-    {
-        type: ClaimsActionTypes.SET_CLAIMS_SUCCESS,
-        payload: claimList
-    }
-)
-
 export const setClaimingError = (message) => (
     {
         type: ClaimsActionTypes.SET_CLAIMING_ERROR,
@@ -48,207 +41,142 @@ export const resetClaims = () => (
     }
 )
 
-export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, columnDensity, xx, size) => (
+export const claimClaim = (gameId, coins, points, claim, userId, userName, myTicket, columnDensity, xx, size) => (
     (dispatch) => {
         try {
             dispatch(setClaiming(true));
+            points = parseInt(points)
             let ticketList, markedListValidNums, i, j, k, count;
             let failingCondition = true;
-            let points = claim.points;
             switch (claim.name) {
                 case "early":
+                    console.log(markedListValidNums)
                     markedListValidNums = myTicket.flat().filter(ele => Array.isArray(ele) && ele[1] && coins.includes(ele[0]));
-                    if (markedListValidNums.length > 0) {
-                        failingCondition = false;
-                    }
+                    if (markedListValidNums.length > 0) failingCondition = false;
                     break;
                 case "twin":
                     const twinCoins = coins.filter(coin => [11, 22, 33, 44, 55, 66, 77, 88].includes(coin));
                     markedListValidNums = myTicket.flat().filter(ele => Array.isArray(ele) && ele[1] && coins.includes(ele[0]));
-                    if (markedListValidNums.some(num => twinCoins.includes(num[0]))) {
-                        failingCondition = false;
-                    }
+                    if (markedListValidNums.some(num => twinCoins.includes(num[0]))) failingCondition = false;
                     break;
                 case "topFirst":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (ticketList[0][1] && coins.includes(ticketList[0][0])) {
-                        failingCondition = false;
-                    }
+                    if (ticketList[0][1] && coins.includes(ticketList[0][0])) failingCondition = false;
                     break;
                 case "topCenter":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (ticketList[2][1] && coins.includes(ticketList[2][0])) {
-                        failingCondition = false;
-                    }
+                    if (ticketList[2][1] && coins.includes(ticketList[2][0])) failingCondition = false;
                     break;
                 case "topLast":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (ticketList[4][1] && coins.includes(ticketList[4][0])) {
-                        failingCondition = false;
-                    }
+                    if (ticketList[4][1] && coins.includes(ticketList[4][0])) failingCondition = false;
                     break;
                 case "middleFirst":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (ticketList[5][1] && coins.includes(ticketList[5][0])) {
-                        failingCondition = false;
-                    }
+                    if (ticketList[5][1] && coins.includes(ticketList[5][0])) failingCondition = false;
                     break;
                 case "middleCenter":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (ticketList[7][1] && coins.includes(ticketList[7][0])) {
-                        failingCondition = false;
-                    }
+                    if (ticketList[7][1] && coins.includes(ticketList[7][0])) failingCondition = false;
                     break;
                 case "middleLast":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (ticketList[9][1] && coins.includes(ticketList[9][0])) {
-                        failingCondition = false;
-                    }
+                    if (ticketList[9][1] && coins.includes(ticketList[9][0])) failingCondition = false;
                     break;
                 case "bottomFirst":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (ticketList[10][1] && coins.includes(ticketList[10][0])) {
-                        failingCondition = false;
-                    }
+                    if (ticketList[10][1] && coins.includes(ticketList[10][0])) failingCondition = false;
                     break;
                 case "bottomCenter":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (ticketList[12][1] && coins.includes(ticketList[12][0])) {
-                        failingCondition = false;
-                    }
+                    if (ticketList[12][1] && coins.includes(ticketList[12][0])) failingCondition = false;
                     break;
                 case "bottomLast":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (ticketList[14][1] && coins.includes(ticketList[14][0])) {
-                        failingCondition = false;
-                    }
+                    if (ticketList[14][1] && coins.includes(ticketList[14][0])) failingCondition = false;
                     break;
                 case "earlyfive":
                     markedListValidNums = myTicket.flat().filter(ele => Array.isArray(ele) && ele[1] && coins.includes(ele[0]));
-                    if (markedListValidNums.length > 4) {
-                        failingCondition = false;
-                    }
+                    if (markedListValidNums.length > 4) failingCondition = false;
                     break;
-                case "unlucky":
+                case "lucky":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (coins.length > 12 && ticketList.every(cell => !coins.slice(0, 13).includes(cell[0]))) {
-                        failingCondition = false;
-                    }
+                    if (coins.length > 12 && ticketList.every(cell => !coins.slice(0, 13).includes(cell[0]))) failingCondition = false;
                     break;
                 case "zerox":
                     count = 0;
                     for (i = 0; i < 3; i++) {
-                        if (myTicket[i][0] !== -1 && (myTicket[i][0][1] && coins.includes(myTicket[i][0][0]))) {
-                            count++;
-                        }
+                        if (myTicket[i][0] !== -1 && (myTicket[i][0][1] && coins.includes(myTicket[i][0][0]))) count++;
                     }
-                    if (count > 1) {
-                        failingCondition = false;
-                    }
+                    if (count > 1) failingCondition = false;
                     break;
                 case "onex":
                     count = 0;
                     for (i = 0; i < 3; i++) {
-                        if (myTicket[i][1] !== -1 && (myTicket[i][1][1] && coins.includes(myTicket[i][1][0]))) {
-                            count++;
-                        }
+                        if (myTicket[i][1] !== -1 && (myTicket[i][1][1] && coins.includes(myTicket[i][1][0]))) count++;
                     }
-                    if (count > 1) {
-                        failingCondition = false;
-                    }
+                    if (count > 1) failingCondition = false;
                     break;
                 case "twox":
                     count = 0;
                     for (i = 0; i < 3; i++) {
-                        if (myTicket[i][2] !== -1 && (myTicket[i][2][1] && coins.includes(myTicket[i][2][0]))) {
-                            count++;
-                        }
+                        if (myTicket[i][2] !== -1 && (myTicket[i][2][1] && coins.includes(myTicket[i][2][0]))) count++;
                     }
-                    if (count > 1) {
-                        failingCondition = false;
-                    }
+                    if (count > 1) failingCondition = false;
                     break;
                 case "threex":
                     count = 0;
                     for (i = 0; i < 3; i++) {
-                        if (myTicket[i][3] !== -1 && (myTicket[i][3][1] && coins.includes(myTicket[i][3][0]))) {
-                            count++;
-                        }
+                        if (myTicket[i][3] !== -1 && (myTicket[i][3][1] && coins.includes(myTicket[i][3][0]))) count++;
                     }
-                    if (count > 1) {
-                        failingCondition = false;
-                    }
+                    if (count > 1) failingCondition = false;
                     break;
                 case "fourx":
                     count = 0;
                     for (i = 0; i < 3; i++) {
-                        if (myTicket[i][4] !== -1 && (myTicket[i][4][1] && coins.includes(myTicket[i][4][0]))) {
-                            count++;
-                        }
+                        if (myTicket[i][4] !== -1 && (myTicket[i][4][1] && coins.includes(myTicket[i][4][0]))) count++;
                     }
-                    if (count > 1) {
-                        failingCondition = false;
-                    }
+                    if (count > 1) failingCondition = false;
                     break;
                 case "fivex":
                     count = 0;
                     for (i = 0; i < 3; i++) {
-                        if (myTicket[i][5] !== -1 && (myTicket[i][5][1] && coins.includes(myTicket[i][5][0]))) {
-                            count++;
-                        }
+                        if (myTicket[i][5] !== -1 && (myTicket[i][5][1] && coins.includes(myTicket[i][5][0]))) count++;
                     }
-                    if (count > 1) {
-                        failingCondition = false;
-                    }
+                    if (count > 1) failingCondition = false;
                     break;
                 case "sixx":
                     count = 0;
                     for (i = 0; i < 3; i++) {
-                        if (myTicket[i][6] !== -1 && (myTicket[i][6][1] && coins.includes(myTicket[i][6][0]))) {
-                            count++;
-                        }
+                        if (myTicket[i][6] !== -1 && (myTicket[i][6][1] && coins.includes(myTicket[i][6][0]))) count++;
                     }
-                    if (count > 1) {
-                        failingCondition = false;
-                    }
+                    if (count > 1) failingCondition = false;
                     break;
                 case "sevenx":
                     count = 0;
                     for (i = 0; i < 3; i++) {
-                        if (myTicket[i][7] !== -1 && (myTicket[i][7][1] && coins.includes(myTicket[i][7][0]))) {
-                            count++;
-                        }
+                        if (myTicket[i][7] !== -1 && (myTicket[i][7][1] && coins.includes(myTicket[i][7][0]))) count++;
                     }
-                    if (count > 1) {
-                        failingCondition = false;
-                    }
+                    if (count > 1) failingCondition = false;
                     break;
                 case "eightx":
                     count = 0;
                     for (i = 0; i < 3; i++) {
-                        if (myTicket[i][8] !== -1 && (myTicket[i][8][1] && coins.includes(myTicket[i][8][0]))) {
-                            count++;
-                        }
+                        if (myTicket[i][8] !== -1 && (myTicket[i][8][1] && coins.includes(myTicket[i][8][0]))) count++;
                     }
-                    if (count > 1) {
-                        failingCondition = false;
-                    }
+                    if (count > 1) failingCondition = false;
                     break;
                 case "minmax":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele)).sort((a, b) => a[0] > b[0] ? 1 : -1);
                     if (ticketList[0][1]
                         && ticketList[14][1]
                         && coins.includes(ticketList[0][0])
-                        && coins.includes(ticketList[14][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[14][0])) failingCondition = false;
                     break;
                 case "antilla":
                     if (myTicket[0].some(cell => cell !== -1 && cell[1] && coins.includes(cell[0]))
                         && myTicket[1].some(cell => cell !== -1 && cell[1] && coins.includes(cell[0]))
-                        && myTicket[2].some(cell => cell !== -1 && cell[1] && coins.includes(cell[0]))) {
-                        failingCondition = false;
-                    }
+                        && myTicket[2].some(cell => cell !== -1 && cell[1] && coins.includes(cell[0]))) failingCondition = false;
                     break;
                 case "tower":
                     columnDensity.forEach((value, index) => {
@@ -271,9 +199,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && ticketList[10][1]
                         && coins.includes(ticketList[0][0])
                         && coins.includes(ticketList[5][0])
-                        && coins.includes(ticketList[10][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[10][0])) failingCondition = false;
                     break;
                 case "seconds":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -282,9 +208,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && ticketList[11][1]
                         && coins.includes(ticketList[1][0])
                         && coins.includes(ticketList[6][0])
-                        && coins.includes(ticketList[11][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[11][0])) failingCondition = false;
                     break;
                 case "centers":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -293,9 +217,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && ticketList[12][1]
                         && coins.includes(ticketList[2][0])
                         && coins.includes(ticketList[7][0])
-                        && coins.includes(ticketList[12][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[12][0])) failingCondition = false;
                     break;
                 case "fourths":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -304,9 +226,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && ticketList[13][1]
                         && coins.includes(ticketList[3][0])
                         && coins.includes(ticketList[8][0])
-                        && coins.includes(ticketList[13][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[13][0])) failingCondition = false;
                     break;
                 case "lasts":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -315,9 +235,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && ticketList[14][1]
                         && coins.includes(ticketList[4][0])
                         && coins.includes(ticketList[9][0])
-                        && coins.includes(ticketList[14][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[14][0])) failingCondition = false;
                     break;
                 case "news":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -328,9 +246,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[2][0])
                         && coins.includes(ticketList[5][0])
                         && coins.includes(ticketList[9][0])
-                        && coins.includes(ticketList[12][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[12][0])) failingCondition = false;
                     break;
                 case "charminar":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -341,9 +257,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[0][0])
                         && coins.includes(ticketList[4][0])
                         && coins.includes(ticketList[10][0])
-                        && coins.includes(ticketList[14][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[14][0])) failingCondition = false;
                     break;
                 case "fivestar":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -356,9 +270,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[4][0])
                         && coins.includes(ticketList[7][0])
                         && coins.includes(ticketList[10][0])
-                        && coins.includes(ticketList[14][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[14][0])) failingCondition = false;
                     break;
                 case "topRow":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -371,9 +283,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[1][0])
                         && coins.includes(ticketList[2][0])
                         && coins.includes(ticketList[3][0])
-                        && coins.includes(ticketList[4][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[4][0])) failingCondition = false;
                     break;
                 case "middleRow":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -386,9 +296,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[6][0])
                         && coins.includes(ticketList[7][0])
                         && coins.includes(ticketList[8][0])
-                        && coins.includes(ticketList[9][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[9][0])) failingCondition = false;
                     break;
                 case "bottomRow":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -401,9 +309,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[11][0])
                         && coins.includes(ticketList[12][0])
                         && coins.includes(ticketList[13][0])
-                        && coins.includes(ticketList[14][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[14][0])) failingCondition = false;
                     break;
                 case "breakfast":
                     failingCondition = false;
@@ -498,9 +404,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[5][0])
                         && coins.includes(ticketList[9][0])
                         && coins.includes(ticketList[10][0])
-                        && coins.includes(ticketList[14][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[14][0])) failingCondition = false;
                     break;
                 case "twolanes":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -515,9 +419,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[6][0])
                         && coins.includes(ticketList[8][0])
                         && coins.includes(ticketList[11][0])
-                        && coins.includes(ticketList[13][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[13][0])) failingCondition = false;
                     break;
                 case "odds":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -529,9 +431,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                     break;
                 case "earlyten":
                     markedListValidNums = myTicket.flat().filter(ele => Array.isArray(ele) && ele[1] && coins.includes(ele[0]));
-                    if (markedListValidNums.length > 9) {
-                        failingCondition = false;
-                    }
+                    if (markedListValidNums.length > 9) failingCondition = false;
                     break;
                 case "rain":
                     k = 0;
@@ -542,9 +442,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                             k++;
                         }
                     }
-                    if (k === 9) {
-                        failingCondition = false;
-                    }
+                    if (k === 9) failingCondition = false;
                     break;
                 case "snow":
                     k = 0;
@@ -558,9 +456,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                             }
                         }
                     }
-                    if (k === 9) {
-                        failingCondition = false;
-                    }
+                    if (k === 9) failingCondition = false;
                     break;
                 case "bush":
                     k = 0;
@@ -574,9 +470,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                             }
                         }
                     }
-                    if (k === 9) {
-                        failingCondition = false;
-                    }
+                    if (k === 9) failingCondition = false;
                     break;
                 case "triangle":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -597,9 +491,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[11][0])
                         && coins.includes(ticketList[12][0])
                         && coins.includes(ticketList[13][0])
-                        && coins.includes(ticketList[14][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[14][0])) failingCondition = false;
                     break;
                 case "cone":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -620,9 +512,7 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[6][0])
                         && coins.includes(ticketList[7][0])
                         && coins.includes(ticketList[8][0])
-                        && coins.includes(ticketList[12][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[12][0])) failingCondition = false;
                     break;
                 case "navgraha":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
@@ -643,30 +533,24 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                         && coins.includes(ticketList[9][0])
                         && coins.includes(ticketList[10][0])
                         && coins.includes(ticketList[12][0])
-                        && coins.includes(ticketList[14][0])) {
-                        failingCondition = false;
-                    }
+                        && coins.includes(ticketList[14][0])) failingCondition = false;
                     break;
                 case "border":
                     if (myTicket[0].filter(ele => Array.isArray(ele) && ele[1] && coins.includes(ele[0])).length === 5
                         && myTicket[2].filter(ele => Array.isArray(ele) && ele[1] && coins.includes(ele[0])).length === 5
                         && (Array.isArray(myTicket[1][0]) ? (myTicket[1][0][1] && coins.includes(myTicket[1][0][0])) : true)
-                        && (Array.isArray(myTicket[1][8]) ? (myTicket[1][8][1] && coins.includes(myTicket[1][8][0])) : true)) {
-                        failingCondition = false;
-                    }
+                        && (Array.isArray(myTicket[1][8]) ? (myTicket[1][8][1] && coins.includes(myTicket[1][8][0])) : true)) failingCondition = false;
                     break;
                 case "oneleft":
                     markedListValidNums = myTicket.flat().filter(ele => Array.isArray(ele) && ele[1] && coins.includes(ele[0]));
                     if (markedListValidNums.length > 13) {
                         failingCondition = false;
-                        points = points + claim.points - 1
+                        points = points + points - 1
                     }
                     break;
                 case "fullHouse":
                     ticketList = myTicket.flat().filter(ele => Array.isArray(ele));
-                    if (ticketList.every(ele => ele[1] && coins.includes(ele[0]))) {
-                        failingCondition = false;
-                    }
+                    if (ticketList.every(ele => ele[1] && coins.includes(ele[0]))) failingCondition = false;
                     break;
                 default:
                     dispatch(setClaimingError("No matching claims!"));
@@ -676,15 +560,18 @@ export const claimClaim = (gameId, coins, claim, userId, userName, myTicket, col
                 alert("Bogus Claim!");
                 dispatch(setBogusClaim());
             } else {
+                console.log("HERE")
                 saveClaim(
                     gameId,
                     claim.name,
                     userName,
                     userId,
-                    xx ? points + claim.points : points
+                    xx ? points * 2 : points,
+                    size
                 ).then(function () {
+                    console.log("HERE")
                     dispatch(setClaimedSuccess(claim.name === "oneleft" ? 2 : 1));
-                    if(size > 3) dispatch(claim.name === "fullHouse" ? increaseUserV(claim.points) : increasePoints(claim.points));
+                    if(size > 3) dispatch(claim.name === "fullHouse" ? increaseUserV(points) : increasePoints(points));
                 }).catch(function (error) {
                     alert(error);
                     dispatch(setClaimingError(error));

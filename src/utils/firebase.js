@@ -19,6 +19,7 @@ export const getGameRef = (gameId) => {
 }
 
 export const saveClaim = (gameId, claimName, userName, userId, claimPoints, size) => {
+    console.log(gameId, claimName, userName, userId, claimPoints, size)
     const gameRef = getGameRef(gameId);
     const updateObj = {
         [`claims.${claimName}`]: userName,
@@ -28,6 +29,8 @@ export const saveClaim = (gameId, claimName, userName, userId, claimPoints, size
         updateObj[`players.${userId}.p`] = firebase.firestore.FieldValue.increment(claimPoints)
         if (claimName === "fullHouse") updateObj[`players.${userId}.v`] = firebase.firestore.FieldValue.increment(1);
     }
+
+    console.log(updateObj)
     
     return firestore.runTransaction(async (transaction) => transaction.get(gameRef)
         .then(game => {

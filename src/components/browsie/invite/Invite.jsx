@@ -6,7 +6,7 @@ import './Invite.css';
 const Invite = ({ gameId }) => {
     const { pathname } = useLocation();
     const [copied, setCopied] = useState(false);
-    const gameLink = `https://tambola.life${pathname}`;
+    const gameLink = `https://browsie.web.app${pathname}`;
 
     const handleCopy = async () => {
         try {
@@ -21,14 +21,14 @@ const Invite = ({ gameId }) => {
     return (
         <div className="Invite card mtm brm">
             <div className="card-header tac">
-                <h2 className="title co">Send Invite</h2>
+                <h2 className="title co">Invite</h2>
             </div>
             <div className="card-body fcol faic brm bcgg">
-                <p className="mtm">Copy and share your game link</p>
+                <p className="mtm">Tap on the link to copy</p>
                 <div className="share-link-container">
                     <p onClick={handleCopy} className="share-link bcw ps brs mtm frow fjcc faic">
                         {gameLink}
-                        <span className={`copied pxs brs bcy ${copied ? "" : "dnone"}`}>Copied</span>
+                        <span className={`copied pxs brs bcy fss ${copied ? "" : "dnone"}`}>Copied</span>
                     </p>
                 </div>
                 <p className="mtm">OR</p>

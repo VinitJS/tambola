@@ -13,7 +13,7 @@ import { ReactComponent as DayIcon } from '../../../assets/claims/day.svg';
 import { ReactComponent as NightIcon } from '../../../assets/claims/night.svg';
 import { ReactComponent as BorderIcon } from '../../../assets/claims/border.svg';
 import { ReactComponent as FullHouseIcon } from '../../../assets/claims/fullhouse.svg';
-import { ReactComponent as UnluckyIcon } from '../../../assets/claims/unlucky.svg';
+import { ReactComponent as LuckyIcon } from '../../../assets/claims/lucky.svg';
 import { ReactComponent as ZeroXIcon } from '../../../assets/claims/zerox.svg';
 import { ReactComponent as OneXIcon } from '../../../assets/claims/onex.svg';
 import { ReactComponent as TwoXIcon } from '../../../assets/claims/twox.svg';
@@ -68,7 +68,7 @@ const svgs = {
     night: <NightIcon className="mrs" />,
     border: <BorderIcon className="mrs" />,
     fullHouse: <FullHouseIcon className="mrs" />,
-    unlucky: <UnluckyIcon className="mrs" />,
+    lucky: <LuckyIcon className="mrs" />,
     zerox: <ZeroXIcon className="mrs" />,
     onex: <OneXIcon className="mrs" />,
     twox: <TwoXIcon className="mrs" />,
@@ -115,25 +115,14 @@ const svgs = {
 
 const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, claims, myTicket, columnDensity, chances, gVersion, size, tVersion, claimedCount, xx }) => {
 
-
-    const claimIt = (claim) => {
+    const claimIt = (points, claim) => {
         const remChances = chances - claimedCount;
         const required = claim.name === "oneleft" ? 1 : 0;
         let warn = claim.name === "oneleft" ? "Need 2 chances to claim ONE LEFT! " : "";
         warn = warn + `You have ${remChances} chance left!`;
-        remChances > required ? claimClaim(gameId, coins, claim, id, name, myTicket, columnDensity, xx, size) : alert(warn);
+        remChances > required ? claimClaim(gameId, coins, points, claim, id, name, myTicket, columnDensity, xx, size) : alert(warn);
     }
-
     const points_multiplier = 10
-    const claimArray = [
-        [1, 0, 11],
-        [2, 11, 22],
-        [3, 22, 32],
-        [4, 32, 40],
-        [5, 40, 50],
-        [6, 50, 57],
-        [7, 57, 58]
-    ]
     const emojis = {
         early: <span role="img" className="mrxs fsxl">☝</span>,
         twin: <span role="img" className="mrxs fsxl">👯</span>,
@@ -147,37 +136,43 @@ const Claims = ({ claimList, claimClaim, isClaiming, id, name, gameId, coins, cl
             <div className="card-body tac">
                 <h2 className="title co">Claims</h2>
                 {
-                    claimArray.map(range => <>
-                        <div className="cl">{points_multiplier * range[0]} points</div>
-                        {
-                            claimList.slice(range[1], range[2]).map(claim =>
-                                <div key={claim.name} className="claim w100pc frow faic fjcsb">
-                                    <button className="info">
-                                        {svgs[claim.name] ? svgs[claim.name] : emojis[claim.name]}
-                                        <span className="tooltip ps brs">{claim.display}<br />{claim.description}</span>
-                                    </button>
-                                    {
-                                        claims[claim.name]
-                                            ? <span className="claimName bclst brs fgr1 op50pc">{claims[claim.name]?.substring(0, 20)}</span>
-                                            : <>
-                                                <button disabled={isClaiming} className="claim-btn btn btn-y frow fjcsb faic fgr1" 
-                                                    onClick={() => (gVersion === tVersion && chances !== 0) ? claimIt(claim, chances, claimedCount) : alert("Claims will be active after game starts.")}>
-                                                    <span className="ps fgr1">{claim.display}</span>
-                                                    <span className="point bco cw">{claim.points * points_multiplier}{xx && `+${claim.points * points_multiplier}`}{claim.name === "oneleft" && `+${(claim.points-1) * points_multiplier}`}</span>
-                                                </button>
-                                                {
-                                                    claim.name === "fulhouse" && size > 3 && <span role="img" aria-label="star" className="mlxs">⭐</span>
-                                                }
-                                            </>
-                                    }
-                                </div>
-                            )
-                        }
-                    </>)
+                    Object.entries(claimList).map(([points, claimset]) => (
+                        <div key={points} className="section">
+                            <div className="cl">{points_multiplier * Number(points)} points</div>
+                            {
+                                claimset.map(claim =>
+                                    <div key={claim.name} className="claim w100pc frow faic fjcsb">
+                                        <button className="info">
+                                            {svgs[claim.name] ? svgs[claim.name] : emojis[claim.name]}
+                                            <span className="tooltip ps brs">{claim.display}<br />{claim.description}</span>
+                                        </button>
+                                        {
+                                            claims[claim.name]
+                                                ? <span className="claimName bclst brs fgr1 op50pc">{claims[claim.name]?.substring(0, 20)}</span>
+                                                : <>
+                                                    <button disabled={isClaiming} className="claim-btn btn btn-y frow fjcsb faic fgr1" 
+                                                        onClick={() => (gVersion === tVersion && chances !== 0) ? claimIt(points, claim) : alert("Claims will be active after game starts.")}>
+                                                        <span className="ps fgr1">{claim.display}</span>
+                                                        <span className="point bco cw">
+                                                            {points * points_multiplier}
+                                                            {xx && `+${points * points_multiplier}`}
+                                                            {claim.name === "oneleft" && `+${(points-1) * points_multiplier}`}
+                                                        </span>
+                                                    </button>
+                                                    {
+                                                        claim.name === "fulhouse" && size > 3 && <span role="img" aria-label="star" className="mlxs">⭐</span>
+                                                    }
+                                                </>
+                                        }
+                                    </div>
+                                )
+                            }
+                        </div>
+                    ))
                 }
             </div>
-        </div >
-    );
+        </div>
+    );    
 };
 
 const mapStateToProps = ({ claims, user, play, ticket }) => (
@@ -202,7 +197,7 @@ const mapStateToProps = ({ claims, user, play, ticket }) => (
 
 const mapDispatchToProps = dispatch => (
     {
-        claimClaim: (gameId, coins, claim, id, name, myTicket, columnDensity, xx, size) => dispatch(claimClaim(gameId, coins, claim, id, name, myTicket, columnDensity, xx, size))
+        claimClaim: (gameId, coins, points, claim, id, name, myTicket, columnDensity, xx, size) => dispatch(claimClaim(gameId, coins, points, claim, id, name, myTicket, columnDensity, xx, size))
     }
 )
 

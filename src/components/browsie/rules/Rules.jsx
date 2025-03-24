@@ -3,7 +3,7 @@ import React from 'react';
 const Rules = React.memo(() => {
     return (
         <div className="pxs">
-            <h2 className="title co tac mm">Tambola Life Rules</h2>
+            <h2 className="title co tac mm"> Rules</h2>
             <ul>
                 <li className="frow mbm">
                     <span role="img" aria-label="initial points" className="fsxl">🖐</span>
@@ -15,11 +15,11 @@ const Rules = React.memo(() => {
                 </li>
                 <li className="frow mbm">
                     <span role="img" aria-label="first claim bonus" className="fsxl">🤟</span>
-                    <p className="mlm">First claim gives double points</p>
+                    <p className="mlm">Get double points on first claim</p>
                 </li>
                 <li className="frow mbm">
                     <span role="img" aria-label="one left claim" className="fsxl">✌</span>
-                    <p className="mlm">Claim ONE LEFT gives double points, but takes away 2 chances</p>
+                    <p className="mlm">Claim ONE LEFT needs 2 chances and gives double points</p>
                 </li>
                 <li className="frow mbm">
                     <span role="img" aria-label="tap number" className="fsxl">☝</span>

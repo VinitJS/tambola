@@ -1,19 +1,19 @@
-.Claims > .card-body > .claim > .claim-btn {
+.Claims > .card-body > .section > .claim > .claim-btn {
     overflow: hidden;
     position: relative;
     padding: 0;
 }
 
-.Claims > .card-body > .claim > .claimName {
+.Claims > .card-body > .section > .claim > .claimName {
     padding: 6px;
     margin: 5px 0px 5px 0px;
 }
 
-.Claims > .card-body > .claim > .claim-btn > .point {
+.Claims > .card-body > .section > .claim > .claim-btn > .point {
     padding: 10px;
 }
 
-.Claims > .card-body > .claim > .info {
+.Claims > .card-body > .section > .claim > .info {
     position: relative;
     display: inline-block;
     border: none;
@@ -22,7 +22,7 @@
     padding: 0 10px;
 }
 
-.Claims > .card-body > .claim > .info > .tooltip {
+.Claims > .card-body > .section > .claim > .info > .tooltip {
     position: absolute;
     visibility: hidden;
     width: 150px;
@@ -34,7 +34,7 @@
     line-height: 130%;
 }
   
-.Claims > .card-body > .claim > .info > .tooltip::after {
+.Claims > .card-body > .section > .claim > .info > .tooltip::after {
     content: "";
     position: absolute;
     top: 15px;
@@ -45,6 +45,6 @@
     border-color: transparent #222222 transparent transparent;
   }
 
-.Claims > .card-body > .claim > .info:hover > .tooltip {
+.Claims > .card-body > .section > .claim > .info:hover > .tooltip {
     visibility: visible;
 }
