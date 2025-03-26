@@ -34,7 +34,11 @@ const Participant = ({ gameId, setPlaySuccess, setPlayFailure, updateRemWithReq,
                 gVersion,
                 gameBy,
                 c,
-                players: playersArr.sort((b, a) => a.points - b.points),
+                players: playersArr.sort((a, b) => {
+                    if (b.points !== a.points) return b.points - a.points;
+                    if (b.p !== a.p) return b.p - a.p;
+                    return b.v - a.v;
+                }),
                 playersNums,
                 size: playersArr.length,
                 gameId,

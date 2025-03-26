@@ -6,8 +6,9 @@ import { addNewDraw } from '../../../redux/drawing/drawing.actions';
 const Drawn = React.memo(({ coins, gameBy, gameId, size, dchance, addNewDraw, myTNums, name, userId }) => {
     const numero = useMemo(() => {
         const numArray = Array(90).fill(-1);
-        coins.forEach((coin, i) => numArray[coin] = i < 13 ? 1 : true);
-        numArray[coins[coins.length - 1]] = 2; // Highlight the latest drawn number
+        numArray[0] = 0
+        coins.forEach((coin, i) => numArray[coin] = i < 13 ? 1 : 2);
+        numArray[coins[coins.length - 1]] = 3;
         return numArray;
     }, [coins]);
 
@@ -19,6 +20,7 @@ const Drawn = React.memo(({ coins, gameBy, gameId, size, dchance, addNewDraw, my
     }, [addNewDraw, gameId, name, userId, size]);
 
     const chosenDraw = useCallback((value, index) => {
+        if (value === 0) return
         if (!dchance) return alert("You have 0 chances left to demand a number.");
         if (value !== -1) return alert(`${index} is already called out.`);
         if (!myTNums.includes(index)) return alert(`${index} is NOT on your ticket.`);
@@ -43,17 +45,10 @@ const Drawn = React.memo(({ coins, gameBy, gameId, size, dchance, addNewDraw, my
 });
 
 const CellButton = ({ index, value, onClick, isGameStarted }) => {
-    const getClassName = () => {
-        if (value === -1) return "cell brs tac bcw clst";
-        if (value === 1) return "cell brs tac bcw cr b";
-        if (value === 2) return "cell brs tac bcy";
-        return "cell brs tac bcw b";
-    };
-
     return (
         <button
             onClick={() => isGameStarted ? onClick(value, index) : alert("Can demand number after game starts.")}
-            className={getClassName()}
+            className={`cell brs tac fss ${value === -1 ? "bcw clst" : (value === 1 ? "bcw co" : (value === 2 ? "bcw cfd" : value === 0 ? "bcw cw" : "bco cw b"))}`}
         >
             {index}
         </button>

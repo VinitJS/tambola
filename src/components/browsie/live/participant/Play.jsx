@@ -20,8 +20,8 @@ const Play = ({ gameId, isValidGame }) => {
             <Claims gameId={gameId} />
             <Players gameId={gameId} />
             <div className="tac mtm mbm">
-                <p className="ps bcy brxl">
-                    Game Created by{' '}
+                <p className="ps brxl">
+                    Game designed by {' '}
                     <a
                         href="https://www.linkedin.com/in/khandelwalvinit/"
                         target="_blank"

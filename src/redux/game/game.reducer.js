@@ -65,19 +65,13 @@ const gameReducer = (state = INITIAL_STATE, action) => {
             }
 
         case GameActionTypes.UPDATE_GAME_REMAINING: // update remaining
-            let newRem, newDReq;
-            if (state.dReqArr.length > 0) {
-                newRem = action.payload.filter(num => state.dReqArr[0] !== num).concat(state.dReqArr[0]);
-                newDReq = state.dReqArr.splice(1);
-            } else {
-                newRem = action.payload;
-                newDReq = state.dReqArr;
-            }
             return {
                 ...state,
-                remaining: [...newRem],
-                dReqArr: newDReq
-            }
+                remaining: state.dReqArr.length > 0 
+                    ? action.payload.filter(num => num !== state.dReqArr[0]).concat(state.dReqArr[0]) 
+                    : action.payload,
+                dReqArr: state.dReqArr.slice(1),
+            };
 
         case GameActionTypes.RESET_GAME_SUCCESS: // restart game successfully
             return {
