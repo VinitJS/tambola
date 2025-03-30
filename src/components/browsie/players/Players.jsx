@@ -18,8 +18,6 @@ const Players = React.memo(({ players, size, claims, userId }) => {
     utter.current.pitch = 1;
     utter.current.rate = 1;
 
-    console.log(players, claims)
-
     // Effect for handling speech when the leader changes
     useEffect(() => {
         if (players.length > 1 && players[0].points !== players[1].points && players[0].id !== leader.current) {
