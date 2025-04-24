@@ -1,42 +1,35 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route
+  Routes,
+  Route,
+  Navigate
 } from "react-router-dom";
-
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-import Game from './components/browsie/game/Game';
-import Getname from './components/browsie/getname/Getname';
-import Livegame from './components/browsie/live/Livegame';
-import { connect } from 'react-redux';
-import Navbar from './components/browsie/navbar/Navbar';
+import Game from './components/game/Game';
+import Changename from './components/changename/Changename';
+import Livegame from './components/live/Livegame';
+import Navbar from './components/navbar/Navbar';
+import { updateUser } from './redux/user.reducer';
 
-function App({ name }) {
+function App() {
+  const name = useSelector(state => state.user.name);
+  useDispatch(updateUser())
+
   return (
     <div className="App fcol faic">
       <Router>
         <Navbar />
-        <Switch>
-          <Route exact path="/">
-            {name ? <Game /> : <Getname />}
-          </Route>
-          <Route exact path="/user">
-            <Getname />
-          </Route>
-          <Route exact path="/:gameId">
-            {name ? <Livegame /> : <Getname />}
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/" element={name ? <Game /> : <Changename />} />
+          <Route path="/user" element={<Changename />} />
+          <Route path="/:game_id" element={name ? <Livegame /> : <Changename />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       </Router>
     </div>
   );
 }
 
-const mapStateToProps = ({ user }) => (
-  {
-    name: user.name,
-  }
-);
-
-export default connect(mapStateToProps)(App);
+export default App;

@@ -1,0 +1,7 @@
+.Join {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0px;
+    z-index: 2;
+    margin: auto;
+}

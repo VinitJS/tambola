@@ -1,7 +1,0 @@
-.Commentary {
-    position: -webkit-sticky;
-    position: sticky;
-    bottom: 0;
-    z-index: 2;
-    border-radius: 20px 20px 0 0;
-}

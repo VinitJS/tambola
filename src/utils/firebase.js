@@ -12,18 +12,28 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig); // initialize firebase
+
 export const firestore = firebase.firestore(); // initiatize firestore
 
-export const getGameRef = (gameId) => {
-    return firestore.collection("game").doc(gameId)
+export const FieldValue = firebase.firestore.FieldValue;
+
+export const getPlayRef = (game_id) => {
+    return firestore.collection("play").doc(game_id)
 }
 
-export const saveClaim = (gameId, claimName, userName, userId, claimPoints, size) => {
-    const gameRef = getGameRef(gameId);
+export const getCallRef = (game_id) => {
+    return firestore.collection("call").doc(game_id)
+}
+
+export const saveClaim = (game_id, claimName, userName, userId, claimPoints, size) => {
+    
+    const gameRef = getPlayRef(game_id);
+    
     const updateObj = {
         [`claims.${claimName}`]: userName,
         [`players.${userId}.points`]: firebase.firestore.FieldValue.increment(claimPoints)
     }
+    
     if (size > 3) {
         updateObj[`players.${userId}.p`] = firebase.firestore.FieldValue.increment(claimPoints)
         if (claimName === "fullHouse") updateObj[`players.${userId}.v`] = firebase.firestore.FieldValue.increment(1);
@@ -36,25 +46,6 @@ export const saveClaim = (gameId, claimName, userName, userId, claimPoints, size
             return Promise.reject("Sorry! Just claimed by someone else.");
         })
     );
-}
-
-export const saveChosenDraw = (gameId, num, statement, userId, points) => {
-    return getGameRef(gameId).update({
-        dreq: num,
-        c: statement,
-        [`players.${userId}.points`]: firebase.firestore.FieldValue.increment(points)
-    });
-}
-
-export const joinGame = (gameId, userId, name, v, p, points, size) => {
-    return getGameRef(gameId).update({
-        [`players.${userId}`]: {
-            name,
-            points,
-            v,
-            p: size > 3 ? p : p + points
-        }
-    });
 }
 
 export default firebase;

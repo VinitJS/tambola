@@ -1,0 +1,19 @@
+
+.Drawn > .board-border {
+    border-radius: 10px;
+}
+
+.Drawn > .board-border > .board {
+    padding: 5px;
+    height: 320px;
+    width: 330px;
+}
+
+.Drawn > .board-border >.board > .cell {
+    width: 34px;
+    height: 30px;
+    margin: 1px;
+    border: none;
+    font-size: 20px;
+    outline: none;
+}

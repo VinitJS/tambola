@@ -1,0 +1,9 @@
+.Invite > .card-body > .share-link {
+    font-size: 15px;
+    max-width: 100%;
+    word-break: break-all;
+    -webkit-user-select: text;  /* Chrome all / Safari all */
+    -moz-user-select: all;     /* Firefox all */
+    -ms-user-select: all;      /* IE 10+ */
+    user-select: all;          /* Likely future */
+}

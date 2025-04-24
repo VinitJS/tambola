@@ -1,8 +1,0 @@
-const DrawActionTypes = {
-    SET_CHOSEN_DRAW: 'SET_CHOSEN_DRAW',
-    SET_PROCESSING_DRAW: 'SET_PROCESSING_DRAW',
-    SET_SYNTH_UTTER: 'SET_SYNTH_UTTER',
-    SET_CHOSEN_DRAW_RESET: 'SET_CHOSEN_DRAW_RESET'
-}
-
-export default DrawActionTypes;

@@ -106,10 +106,6 @@ code {
   width: 80%;
 }
 
-.brr {
-  border: 1px solid var(--cred);
-}
-
 .cg {
   color: var(--cgreen);
 }
@@ -304,6 +300,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6f0a3', end
 
 .btn-link:hover {
   text-decoration: none;
+  cursor: pointer;
 }
 
 .btn {
@@ -346,7 +343,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6f0a3', end
 
 .btn-o {
   background-color: var(--corange);
-  color: black;
+  color: white;
 }
 
 .btn-p {
