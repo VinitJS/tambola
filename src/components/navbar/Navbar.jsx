@@ -13,16 +13,16 @@ const Navbar = () => {
             <div className="nav frow fjcsb">
                 <button 
                     onClick={() => id && navigate(`/`)} 
-                    className="btn pm cr b w100pc mxs" 
+                    className="btn pm cy b w100pc mxs bcd" 
                     disabled={!id}
                 >
-                    {id ? "Host My Game" : "No Game Available"}
+                    HOST MY GAME
                 </button>
                 <button 
                     onClick={() => navigate("/user")} 
-                    className="btn pm cb b w100pc mxs"
+                    className="btn pm clst b w100pc mxs bcd"
                 >
-                    Change Name
+                    PROFILE
                 </button>
             </div>
         </nav>

@@ -64,7 +64,7 @@ const Players = React.memo(() => {
             }
             {players.map(player => (
                 <div key={player.id} className="frow faic mtm">
-                    <div className="player frow faic bcly pxs">
+                    <div className="player frow faic bcly pxs cd">
                         <span className="mxs fsxl" role="img" aria-label={`Avatar of ${player.name}`}>{emo.current[player.total_points % emo.current.length]}</span>
                         <div className="fcol faic">
                             <div className="fss mrxs">

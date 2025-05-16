@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -11,8 +11,13 @@ const Game = () => {
     const dispatch = useDispatch();
 
     const { id, name } = useSelector((state) => state.user);
+    const { play_id } = useSelector((state) => state.game);
 
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (play_id && id && play_id === id) navigate(`/${play_id}`);
+    }, [play_id, id, navigate]);
 
     const handleClick = async () => {
         setLoading(true);
@@ -29,14 +34,7 @@ const Game = () => {
                 await callRef.set({
                     game_by: name,
                     claims: {},
-                    players: {
-                        [id]: {
-                            name,
-                            points: 0,
-                            total_points: 0,
-                            total_stars: 0,
-                        },
-                    },
+                    players: {},
                     coins: [],
                     version: FieldValue.increment(1),
                 });

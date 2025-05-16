@@ -14,10 +14,10 @@ const Board = React.memo(() => {
 
     return (
         <div className="Drawn fcol mtxs">
-            <div className="board-border bclst tac">
+            <div className="board-border bcdr tac">
                 <div className="board fcol fwrap w100pc">
                     {numero.map((value, index) => (
-                        <button key={index} className={`cell brs tac fss ${value === -1 ? "bcw clst" : (value === 1 ? "bcw co" : (value === 2 ? "bcw cfd" : "bco cw b"))}`}>
+                        <button key={index} className={`cell brs tac fss ${value === -1 ? "bcd cdr" : (value === 1 ? "bcd co" : (value === 2 ? "bcd clst" : "bco cw"))}`}>
                             {index}
                         </button>
                     ))}

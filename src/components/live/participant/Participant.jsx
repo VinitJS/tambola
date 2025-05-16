@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { updateCoins } from '../../../redux/coins.reducer';
-import { updateGame } from '../../../redux/game.reducer';
+import { resetGame, updateGame } from '../../../redux/game.reducer';
 import { updatePlayers } from '../../../redux/players.reducer';
 import { updateClaims } from '../../../redux/claims.reducer';
 import { firestore } from "../../../utils/firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Board from '../../board/Board';
 import Rules from '../../rules/Rules';
 import Tsection from '../../tsection/Tsection';
@@ -12,23 +12,29 @@ import Players from '../../players/Players';
 import Claims from '../../claims/Claims';
 import Invite from '../../invite/Invite';
 import { useNavigate } from 'react-router-dom';
+import { updateTicket } from '../../../redux/ticket.reducer';
 
 const Participant = ({ game_id }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const id = useSelector(state => state.user.id);
     useEffect(() => {
         const unsubscribe = firestore
             .collection("call")
             .doc(game_id)
             .onSnapshot(
                 (snapshot) => {
-                    if (!snapshot.exists) return navigate("/");
+                    if (!snapshot.exists) {
+                        dispatch(resetGame())
+                        return navigate("/");
+                    }
                     const {
                         game_by,
                         version,
                         coins,
                         players,
-                        claims
+                        claims,
+                        message
                     } = snapshot.data();
 
                     dispatch(updateCoins({
@@ -40,7 +46,13 @@ const Participant = ({ game_id }) => {
                         play_id: game_id,
                         version,
                         coin_count: coins.length,
-                        players_count: Object.keys(players).length
+                        players_count: Object.keys(players).length,
+                        message
+                    }));
+
+                    dispatch(updateTicket({
+                        flatTicket: players?.[id]?.ticket,
+                        version
                     }));
 
                     dispatch(updatePlayers({
@@ -49,21 +61,22 @@ const Participant = ({ game_id }) => {
 
                     dispatch(updateClaims({
                         claims,
-                        players_count: Object.keys(players).length
+                        players_count: Object.keys(players).length,
+                        chances_left: players?.[id]?.chances_left
                     }));
                 },
                 (error) => console.error("Error fetching game status:", error)
             );
         return () => unsubscribe();
-    }, [game_id, dispatch, navigate]);
+    }, [game_id, id, dispatch, navigate]);
 
     return <div className="fcol faic">
         <Rules />
+        <Invite/>
         <Claims game_id={game_id} />
         <Tsection game_id={game_id} />
         <Board />
         <Players game_id={game_id} />
-        <Invite/>
         <div className="tac mtm mbm">
             <p className="ps brxl">
                 Game designed by {' '}
@@ -71,7 +84,7 @@ const Participant = ({ game_id }) => {
                     href="https://www.linkedin.com/in/khandelwalvinit/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-link"
+                    className="btn-link cb"
                     >
                     Vinit Khandelwal
                 </a>

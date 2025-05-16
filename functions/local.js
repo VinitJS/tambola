@@ -1,23 +1,25 @@
-const { onDocumentWritten } = require("firebase-functions/v2/firestore");
-const admin = require("firebase-admin");
-admin.initializeApp();
-const db = admin.firestore();
+// const { onDocumentWritten } = require("firebase-functions/v2/firestore");
+// const admin = require("firebase-admin");
+// admin.initializeApp();
+// const db = admin.firestore();
 const activeGames = {};
-exports.onPlayStart = onDocumentWritten("play/{playId}", async (event) => {
-  const playId = event.params.playId;
-  const before = event.data.before?.data() || {};
-  const after = event.data.after?.data() || {};
-  if (!before.start && after.start) return startGame(playId, after.speed);
-  if (before.start && !after.start) stopGame(playId);
-  return null;
-});
+// exports.onPlayStart = onDocumentWritten("play/{playId}", async (event) => {
+//   const playId = event.params.playId;
+//   const before = event.data.before?.data() || {};
+//   const after = event.data.after?.data() || {};
+//   if (!before.start && after.start) return startGame(db, playId, after.speed);
+//   if (before.start && !after.start) stopGame(db, playId);
+//   return null;
+// });
+
 function stopGame(playId) {
   if (activeGames[playId]) {
     clearInterval(activeGames[playId].interval);
     delete activeGames[playId];
   }
 }
-async function startGame(playId, speed) {
+
+async function startGame(db, FieldValue, playId, speed) {
   const allNumbers = Array.from({ length: 90 }, (_, i) => i);
   let toggle = true;
   let maxIntervals = Math.floor(500 / speed);
@@ -48,7 +50,7 @@ async function startGame(playId, speed) {
           return stopGame(playId);
         }
         toggle = !toggle;
-        await db.collection("call").doc(playId).update({ coins: admin.firestore.FieldValue.arrayUnion(nextNumber) });
+        await db.collection("call").doc(playId).update({ coins: FieldValue.arrayUnion(nextNumber) });
       } catch (err) {
         console.error(`[${playId}] Error Running Game:`, err);
         stopGame(playId);
@@ -80,3 +82,24 @@ function getNextNumber(toggle, tickets, ticketArr, restArr, usedNumbers, special
   if (filteredTickets.some(t => t.length > 0)) return pickNumberFromTickets(filteredTickets);
   return null;
 }
+
+const firebase = require('firebase/app');
+require('firebase/firestore');
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBSrQiziy65VjSRygLHNnpyR3jECtYBdXY",
+    authDomain: "browsie.firebaseapp.com",
+    databaseURL: "https://browsie.firebaseio.com",
+    projectId: "browsie",
+    storageBucket: "browsie.appspot.com",
+    messagingSenderId: "1017417120567",
+    appId: "1:1017417120567:web:236fdfa7953ae66dc178b2"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const firestore = firebase.firestore();
+
+const FieldValue = firebase.firestore.FieldValue;
+
+startGame(firestore, FieldValue, "ma564hql", 5)

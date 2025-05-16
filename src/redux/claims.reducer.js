@@ -10,11 +10,11 @@ const claimsSlice = createSlice({
     name: 'claims',
     initialState: getInitialState(),
     reducers: {
-        updateClaims: (state, { payload: { claims, players_count, chances_left, reduce_chances } }) => {
+        updateClaims: (state, { payload: { claims, players_count, chances_left, change_chances } }) => {
             if (claims && JSON.stringify(state.claims) !== JSON.stringify(claims)) state.claims = claims;
             if (players_count && state.players_count !== players_count) state.players_count = players_count;
             if (chances_left && state.chances_left !== chances_left) state.chances_left = chances_left;
-            if (reduce_chances) state.chances_left -= reduce_chances;
+            if (change_chances) state.chances_left += change_chances;
         }
     }
 });

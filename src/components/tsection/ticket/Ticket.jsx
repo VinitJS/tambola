@@ -17,7 +17,7 @@ const Ticket = () => {
                             {
                                 row.map((cell, col_index) => <button 
                                     onClick={() => cell !== -1 && dispatch(toggleTick({ row_index, col_index }))} 
-                                    className={`tcell brs ${cell[1] ? "bcy cd" : "bco cw"}`} 
+                                    className={`tcell brs ${cell[1] ? "bcy" : "bco cw"}`} 
                                     key={col_index}
                                 >
                                     {cell[0]}

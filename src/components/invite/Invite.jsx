@@ -26,10 +26,10 @@ const Invite = () => {
 
     return (
         <div className="Invite card mtm brm w100pc">
-            <div className="card-body fcol faic brm bcgg">
+            <div className="card-body fcol faic brm bcgd">
                 <p className="mtm">Game Link</p>
-                <div className="share-link-container tac">
-                    <p ref={linkRef} onClick={handleCopy} className="share-link bcw ps brs mtm">
+                <div className="share-link-container tac cd">
+                    <p ref={linkRef} onClick={handleCopy} className="share-link bclst ps brs mtm">
                         {gameLink}
                     </p>
                     {

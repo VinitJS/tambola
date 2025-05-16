@@ -1,6 +1,8 @@
 :root {
-  --cdark: #1e1832;
-  --cfaintdark: #3b2f63;
+  --cdarkest: #0a1b23;
+  --cdarker: #1b2c34;
+  --cdark: #2c3d45;
+  --cfaintdark: #3d4e56;
   --cred: #ca3038;
   --corange: #de6a37;
   --cyellow: #feaf38;
@@ -9,9 +11,9 @@
   --cbrightblue: #0000ee;
   --cpink: #ff6b97;
   --clightgreen: #cfff70;
-  --clight: #999999;
-  --clighter: #bbbbbb;
-  --clightest: #dddddd;
+  --clight: #6f7f89;
+  --clighter: #8f9fab;
+  --clightest: #afbfcd;
   --cgreen: #4fce5d;
 }
 
@@ -28,9 +30,11 @@ body {
   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif; */
+  color: var(--clighter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/disp/acb65873426833.5c08f5634f7fb.png');
+  background-color: var(--cdarkest);
+  background-image: url('https://wallpaperaccess.com/full/2224368.png');
   background-attachment: fixed;
   background-size: 200px;
 }
@@ -130,6 +134,22 @@ code {
   background-color: var(--cdark);
 }
 
+.cdr {
+  color: var(--cdarker);
+}
+
+.bcdr {
+  background-color: var(--cdarker);
+}
+
+.cdst {
+  color: var(--cdarkest);
+}
+
+.bcdst {
+  background-color: var(--cdarkest);
+}
+
 .cr {
   color: var(--cred);
 }
@@ -170,28 +190,12 @@ code {
   background-color: var(--cblue);;
 }
 
-.cbb {
-  color: var(--cbrightblue);
-}
-
-.bcbb {
-  background-color: var(--cbrightblue);
-}
-
 .cw {
   color: white;
 }
 
 .bcw {
   background-color: white;
-}
-
-.cbl {
-  color: black;
-}
-
-.bcbl {
-  background-color: black;
 }
 
 .cl {
@@ -202,11 +206,11 @@ code {
   background-color: var(--clight);
 }
 
-.cler {
+.clr {
   color: var(--clighter);
 }
 
-.bcler {
+.bclr {
   background-color: var(--clighter);
 }
 
@@ -218,37 +222,21 @@ code {
   background-color: var(--clightest);
 }
 
-.cp {
-  color: var(--cpink);
-}
-
-.bcp {
-  background-color: var(--cpink);
-}
-
-.clg {
-  color: var(--clightgreen);
-}
-
-.bclg {
-  background-color: var(--clightgreen);
-}
-
-.bcgo {
+.bcgd {
 /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#fceabb+0,fccd4d+50,f8b500+51,fbdf93+100;Orange+3D+%235 */
-background: #fceabb; /* Old browsers */
-background: -moz-linear-gradient(45deg,  #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(45deg,  #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(45deg,  #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+background: var(--cdarker); /* Old browsers */
+background: -moz-linear-gradient(45deg,  var(--cdarker) 0%, var(--cdarker) 50%, var(--cdark) 51%, var(--cdark) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(45deg,  var(--cdarker) 0%,var(--cdarker) 50%,var(--cdark) 51%,var(--cdark) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(45deg,  var(--cdarker) 0%,var(--cdarker) 50%,var(--cdark) 51%,var(--cdark) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .bcgg {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e6f0a3+0,d2e638+50,c3d825+51,dbf043+100;Green+Gloss+%232 */
-background: #e6f0a3; /* Old browsers */
-background: -moz-linear-gradient(-45deg,  #e6f0a3 0%, #d2e638 50%, #c3d825 51%, #dbf043 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg,  #e6f0a3 0%,#d2e638 50%,#c3d825 51%,#dbf043 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg,  #e6f0a3 0%,#d2e638 50%,#c3d825 51%,#dbf043 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+background: #445544; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #445544 0%, #445544 50%, #334433 51%, #334433 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg,  #445544 0%,#445544 50%,#334433 51%,#334433 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg,  #445544 0%,#445544 50%,#334433 51%,#334433 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6f0a3', endColorstr='#dbf043',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 

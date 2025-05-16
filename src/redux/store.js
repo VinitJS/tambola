@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
   claims: claimsReducer
 });
 
-const CURRENT_VERSION = 0;
+const CURRENT_VERSION = 1;
 
 const persistConfig = {
   key: 'root',

@@ -13,7 +13,10 @@ const gameSlice = createSlice({
     name: 'game',
     initialState: getInitialState(),
     reducers: {
-        updateGame(state, { payload: { game_by, play_id, version, coin_count, speed, players_count } }) {
+        resetGame() {
+            return getInitialState()
+        },
+        updateGame(state, { payload: { game_by, play_id, version, coin_count, speed, players_count, message } }) {
             if ((game_by !== undefined) && game_by !== state.game_by) {
                 state.game_by = game_by;
             }
@@ -32,9 +35,12 @@ const gameSlice = createSlice({
             if ((players_count !== undefined) && players_count !== state.players_count) {
                 state.players_count = players_count;
             }
+            if ((message !== undefined) && message !== state.message) {
+                state.message = message;
+            }
         }
     }
 });
 
-export const { updateGame } = gameSlice.actions;
+export const { resetGame, updateGame } = gameSlice.actions;
 export default gameSlice.reducer;

@@ -46,8 +46,6 @@ import { ReactComponent as RainIcon } from '../../assets/claims/rain.svg';
 import { ReactComponent as SnowIcon } from '../../assets/claims/snow.svg';
 import { ReactComponent as BushIcon } from '../../assets/claims/bush.svg';
 import { ReactComponent as TriveniIcon } from '../../assets/claims/triveni.svg';
-import { ReactComponent as OddsIcon } from '../../assets/claims/odds.svg';
-import { ReactComponent as EvensIcon } from '../../assets/claims/evens.svg';
 import { ReactComponent as CouplesIcon } from '../../assets/claims/couples.svg';
 import { ReactComponent as SinglesIcon } from '../../assets/claims/singles.svg';
 import { ReactComponent as ZebraIcon } from '../../assets/claims/zebra.svg';
@@ -111,8 +109,6 @@ const Claims = ({ game_id }) => {
         snow: <SnowIcon className="mrs" />,
         bush: <BushIcon className="mrs" />,
         triveni: <TriveniIcon className="mrs" />,
-        odds: <OddsIcon className="mrs" />,
-        evens: <EvensIcon className="mrs" />,
         singles: <SinglesIcon className="mrs" />,
         couples: <CouplesIcon className="mrs" />,
         twolanes: <TwolanesIcon className="mrs" />,
@@ -129,81 +125,85 @@ const Claims = ({ game_id }) => {
         twin: <span role="img" className="mrxs fsxl">👯</span>,
         earlyfive: <span role="img" className="mrxs fsxl">🖐</span>,
         earlyten: <span role="img" className="mrxs fsxl">🙌</span>,
-        oneleft: <span role="img" className="mrxs fsxl">🤌</span>
+        oneleft: <span role="img" className="mrxs fsxl">🤌</span>,
+        today: <span role="img" className="mrxs fsxl">🗓️</span>,
+        odds: <span role="img" className="mrxs fsxl clst">1 3 5</span>,
+        evens: <span role="img" className="mrxs fsxl clst">0 2 4</span>
     }), []);
     
     const claimGroups = useMemo(() => ({
         1: [
-            { name: "early", display: "EARLY", description: "Any 1 number." },
-            { name: "topFirst", display: "TOP FIRST", description: "1st number, top row." },
-            { name: "topCenter", display: "TOP CENTER", description: "3rd number, top row." },
-            { name: "topLast", display: "TOP LAST", description: "5th number, top row." },
-            { name: "middleFirst", display: "MIDDLE FIRST", description: "1st number, middle row." },
-            { name: "middleCenter", display: "MIDDLE CENTER", description: "3rd number, middle row." },
-            { name: "middleLast", display: "MIDDLE LAST", description: "5th number, middle row." },
-            { name: "bottomFirst", display: "BOTTOM FIRST", description: "1st number, bottom row." },
-            { name: "bottomCenter", display: "BOTTOM CENTER", description: "3rd number, bottom row." },
-            { name: "bottomLast", display: "BOTTOM LAST", description: "5th number, bottom row." },
-            { name: "twin", display: "TWIN", description: "Any of 11, 22, 33, 44, 55, 66, 77, 88." },
+            { name: "early", display: "EARLY", description: "ANY 1 number." },
+            { name: "topFirst", display: "TOP FIRST", description: "FIRST from TOP row." },
+            { name: "topCenter", display: "TOP CENTER", description: "MIDDLE from TOP row." },
+            { name: "topLast", display: "TOP LAST", description: "LAST from TOP row." },
+            { name: "middleFirst", display: "MIDDLE FIRST", description: "FIRST from MIDDLE row." },
+            { name: "middleCenter", display: "MIDDLE CENTER", description: "MIDDLE from MIDDLE row." },
+            { name: "middleLast", display: "MIDDLE LAST", description: "LAST from MIDDLE row." },
+            { name: "bottomFirst", display: "BOTTOM FIRST", description: "FIRST from BOTTOM row." },
+            { name: "bottomCenter", display: "BOTTOM CENTER", description: "MIDDLE from BOTTOM row." },
+            { name: "bottomLast", display: "BOTTOM LAST", description: "LAST from BOTTOM row." },
+            { name: "twin", display: "TWIN", description: "ANY 1 number from 11, 22, 33, 44, 55, 66, 77, 88." },
         ],
         2: [
-            { name: "zerox", display: "ALL UNITS", description: "All numbers between 1-9." },
-            { name: "onex", display: "ALL 10s", description: "All numbers between 10-19." },
-            { name: "twox", display: "ALL 20s", description: "All numbers between 20-29." },
-            { name: "threex", display: "ALL 30s", description: "All numbers between 30-39." },
-            { name: "fourx", display: "ALL 40s", description: "All numbers between 40-49." },
-            { name: "fivex", display: "ALL 50s", description: "All numbers between 50-59." },
-            { name: "sixx", display: "ALL 60s", description: "All numbers between 60-69." },
-            { name: "sevenx", display: "ALL 70s", description: "All numbers between 70-79." },
-            { name: "eightx", display: "ALL 80s", description: "All numbers between 80-89." },
-            { name: "minmax", display: "MIN-MAX", description: "Smallest & largest number." },
-            { name: "triveni", display: "TRIVENI", description: "1 number from each row." },    
+            { name: "zerox", display: "ALL UNITS", description: "ALL numbers from 0-9." },
+            { name: "onex", display: "ALL 10s", description: "ALL numbers from 10-19." },
+            { name: "twox", display: "ALL 20s", description: "ALL numbers from 20-29." },
+            { name: "threex", display: "ALL 30s", description: "ALL numbers from 30-39." },
+            { name: "fourx", display: "ALL 40s", description: "ALL numbers from 40-49." },
+            { name: "fivex", display: "ALL 50s", description: "ALL numbers from 50-59." },
+            { name: "sixx", display: "ALL 60s", description: "ALL numbers from 60-69." },
+            { name: "sevenx", display: "ALL 70s", description: "ALL numbers from 70-79." },
+            { name: "eightx", display: "ALL 80s", description: "ALL numbers from 80-89." },
+            { name: "minmax", display: "MIN-MAX", description: "SMALLEST & LARGEST number." },
+            { name: "triveni", display: "TRIVENI", description: "ANY 1 number from EACH of the 3 rows." },    
         ],
         3: [
-            { name: "tower", display: "TOWER", description: "3 vertical numbers in a column." },
-            { name: "earlyfive", display: "EARLY FIVE", description: "Any 5 numbers." },
-            { name: "firsts", display: "FIRSTS", description: "1st number from each row." },
-            { name: "seconds", display: "SECONDS", description: "2nd number from each row." },
-            { name: "thirds", display: "THIRDS", description: "3rd number from each row." },
-            { name: "fourths", display: "FOURTHS", description: "4th number from each row." },
-            { name: "fifths", display: "FIFTHS", description: "5th number from each row." },
-            { name: "news", display: "NEWS", description: "3rd number (top & bottom), 1st & 5th (middle)." },
-            { name: "charminar", display: "CHARMINAR", description: "1st & 5th numbers (top & bottom rows)." },        
+            { name: "tower", display: "TOWER", description: "ALL 3 from ANY 1 column." },
+            { name: "earlyfive", display: "EARLY FIVE", description: "ANY 5." },
+            { name: "firsts", display: "FIRSTS", description: "1st from ALL 3 rows." },
+            { name: "seconds", display: "SECONDS", description: "2nd from ALL 3 rows." },
+            { name: "thirds", display: "THIRDS", description: "3rd from ALL 3 rows." },
+            { name: "fourths", display: "FOURTHS", description: "4th from ALL 3 rows." },
+            { name: "fifths", display: "FIFTHS", description: "5th from ALL 3 rows." },
+            { name: "news", display: "NEWS", description: "1st & 5th from MIDDLE row, 3rd from TOP & BOTTOM rows." },
+            { name: "charminar", display: "CHAR-MINAR", description: "1st & 5th from TOP & BOTTOM rows." },        
         ],
         4: [
-            { name: "fivestar", display: "FIVE STAR", description: "3rd (middle row), 1st & 5th (top & bottom rows)." },
-            { name: "topRow", display: "TOP ROW", description: "All 5 numbers, top row." },
-            { name: "middleRow", display: "MIDDLE ROW", description: "All 5 numbers, middle row." },
-            { name: "bottomRow", display: "BOTTOM ROW", description: "All 5 numbers, bottom row." },
-            { name: "breakfast", display: "BREAKFAST", description: "All numbers in columns 1-3." },
-            { name: "lunch", display: "LUNCH", description: "All numbers in columns 4-6." },
-            { name: "dinner", display: "DINNER", description: "All numbers in columns 7-9." },
-            { name: "singles", display: "SINGLES", description: "All numbers without neighbors." },
+            { name: "fivestar", display: "FIVE STAR", description: "1st & 5th from TOP & BOTTOM rows, 3rd from MIDDLE row)." },
+            { name: "today", display: `TODAY (${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear().toString().slice(-2)})`, description: `Any number from today's date: ${new Date().getDate()} / ${new Date().getMonth() + 1} / ${new Date().getFullYear().toString().slice(-2)}` },
+            { name: "topRow", display: "TOP ROW", description: "ALL 5 numbers from TOP row." },
+            { name: "middleRow", display: "MIDDLE ROW", description: "ALL 5 numbers from MIDDLE row." },
+            { name: "bottomRow", display: "BOTTOM ROW", description: "ALL 5 numbers from BOTTOM row." },
+            { name: "breakfast", display: "BREAK-FAST", description: "ALL numbers in FIRST 3 columns." },
+            { name: "lunch", display: "LUNCH", description: "ALL numbers in MIDDLE 3 columns." },
+            { name: "dinner", display: "DINNER", description: "ALL numbers in LAST 3 columns." },
+            { name: "singles", display: "SINGLES", description: "ALL numbers with NO number on LEFT and RIGHT of it." },
         ],
         5: [
-            { name: "couples", display: "COUPLES", description: "All horizontal pairs." },
-            { name: "earlyten", display: "EARLY TEN", description: "Any 10 numbers." },
-            { name: "sides", display: "SIDES", description: "1st & 5th (top, middle, bottom rows)." },
-            { name: "twolanes", display: "NEXT 2 SIDES", description: "2nd & 4th (top, middle, bottom rows)." },
-            { name: "day", display: "DAY", description: "All numbers in columns 1-5." },
-            { name: "night", display: "NIGHT", description: "All numbers in columns 5-9." },
-            { name: "zebra", display: "ZEBRA", description: "All numbers in columns 1, 3, 5, 7, 9." },
-            { name: "odds", display: "ODDS", description: "All odd numbers." },
-            { name: "evens", display: "EVENS", description: "All even numbers." },
-            { name: "rain", display: "RAIN", description: "1 number from each column." },    
+            { name: "couples", display: "COUPLES", description: "ALL numbers with ANOTHER number beside it." },
+            { name: "earlyten", display: "EARLY TEN", description: "ANY 10 numbers." },
+            { name: "lucky", display: "LUCKY 13", description: "NO MATCH in the first 13 calls." },
+            { name: "sides", display: "SIDES", description: "1st & 5th from TOP, MIDDLE, BOTTOM rows." },
+            { name: "twolanes", display: "NEXT 2 SIDES", description: "2nd & 4th from TOP, MIDDLE, BOTTOM rows." },
+            { name: "day", display: "DAY", description: "ALL numbers in FISRT 5 columns." },
+            { name: "night", display: "NIGHT", description: "ALL numbers in LAST 5 columns." },
+            { name: "zebra", display: "ZEBRA", description: "ALL numbers in columns 1, 3, 5, 7, 9." },
+            { name: "odds", display: "ODDS", description: "ALL ODD numbers." },
+            { name: "evens", display: "EVENS", description: "ALL EVEN numbers." },
+            { name: "rain", display: "RAIN", description: "1 number in EACH column." },    
         ],
         6: [
-            { name: "lucky", display: "LUCKY 13", description: "No matches in first 13 calls." },
-            { name: "snow", display: "SNOW", description: "First number from each column." },
-            { name: "bush", display: "BUSH", description: "Last number from each column." },
-            { name: "triangle", display: "TRIANGLE", description: "3rd (top), 2nd-4th (middle), all 5 (bottom)." },
-            { name: "cone", display: "CONE", description: "All 5 (top), 2nd-4th (middle), 3rd (bottom)." },
-            { name: "alternate", display: "ALT", description: "1st, 3rd, 5th, 7th, 9th, 11th, 13th, 15th." },
-            { name: "border", display: "BORDER", description: "All numbers on the border." },
-            { name: "oneleft", display: "ONE LEFT", description: "Any 14 numbers (takes away 2 chances)." },
+            { name: "snow", display: "SNOW", description: "FIRST number in EACH column." },
+            { name: "bush", display: "BUSH", description: "LAST number in EACH column." },
+            { name: "triangle", display: "TRIANGLE", description: "3rd in TOP row, 2nd, 3rd, 4th in MIDDLE row, AL 5 in BOTTOM row." },
+            { name: "cone", display: "CONE", description: "ALL 5 in TOP row, 2nd, 3rd, 4th in MIDDLE row, 3rd in BOTTOM row." },
+            { name: "alternate", display: "ALT", description: "1st, 3rd, 5th in TOP and BOTTOM row, 2nd, 4th in MIDDLE row." },
+            { name: "border", display: "BORDER", description: "ALL numbers on the BORDER." },
+            { name: "oneleft", display: "ONE LEFT", description: "ANY 14 numbers (takes away 2 chances, gives double the points)." },
         ],
         7: [
-            { name: "fullHouse", display: "FULL HOUSE", description: "All 15 numbers." },
+            { name: "fullHouse", display: "FULL HOUSE", description: "ALL 15 numbers." },
         ]
     }), []);
 
@@ -321,6 +321,10 @@ const Claims = ({ game_id }) => {
                     const fifthsNumbers = ticket.flat().filter(element => Array.isArray(element));
                     success = [4, 9, 14].every(i => fifthsNumbers[i][1] && coinsSet.has(fifthsNumbers[i][0]));
                     break;
+                case "today":
+                    const today = [new Date().getDate(), new Date().getMonth() + 1, Number(new Date().getFullYear().toString().slice(-2))]
+                    success = ticket.flat().some(element => Array.isArray(element) && element[1] && coinsSet.has(element[0]) && today.includes(element[0]));
+                break;    
                 case "news":
                     const newsNumbers = ticket.flat().filter(element => Array.isArray(element));
                     success = [2, 5, 9, 12].every(i => newsNumbers[i][1] && coinsSet.has(newsNumbers[i][0]));
@@ -425,22 +429,23 @@ const Claims = ({ game_id }) => {
             }
 
             const increment_points = claim.name === "oneleft" ? (chances_left === 2 ? (points * 2) + (points - 1) : points + (points - 1)) : chances_left === 1 ? points * 2 : points;
+            const change_chances = claim.name === "oneleft" ? -2 : -1;
 
-            const { status, reduce_chances, reason } = await firestore.runTransaction(async (transaction) => {
+            const { status, reason } = await firestore.runTransaction(async (transaction) => {
                 const doc = await transaction.get(firestore.collection("call").doc(game_id));
                 if (!doc.exists) return { status: false, reason: "not_started"}
                 if (doc.data().claims[claim.name]) return { status: false, reason: "already_claimed" };
                 transaction.update(firestore.collection("call").doc(game_id), {
                     [`claims.${claim.name}`]: name,
                     [`players.${id}.points`]: FieldValue.increment(increment_points),
+                    [`players.${id}.chances_left`]: FieldValue.increment(change_chances),
                 });
                 return {
-                    status: true,
-                    reduce_chances: claim.name === "oneleft" ? 2 : 1,
+                    status: true
                 };
             });
             if (status) {
-                dispatch(updateClaims({ reduce_chances }));
+                dispatch(updateClaims({ change_chances }));
                 dispatch(updateUser({ increment_stars: claim.name === "fullHouse", increment_points }));
             }
             else if (reason) {
@@ -470,7 +475,7 @@ const Claims = ({ game_id }) => {
                                     <span className="tooltip ps brs">{claim.display}<br/>{claim.description}</span>
                                 </button>
                                 {claims && claims[claim.name] ? (
-                                    <span className="claimName bclst brs fgr1 op50pc">
+                                    <span className="claimName bclst brs fgr1 op50pc cd">
                                         {claims[claim.name]?.substring(0, 20)}
                                     </span>
                                 ) : (

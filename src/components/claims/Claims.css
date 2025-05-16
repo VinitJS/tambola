@@ -26,8 +26,8 @@
     position: absolute;
     visibility: hidden;
     width: 150px;
-    background-color: #222222;
-    color: #fff;
+    background-color: white;
+    color: var(--cdarkest);
     z-index: 1;
     top: -10px;
     left: 85%;
