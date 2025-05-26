@@ -127,8 +127,8 @@ const Claims = ({ game_id }) => {
         earlyten: <span role="img" className="mrxs fsxl">🙌</span>,
         oneleft: <span role="img" className="mrxs fsxl">🤌</span>,
         today: <span role="img" className="mrxs fsxl">🗓️</span>,
-        odds: <span role="img" className="mrxs fsxl clst">1 3 5</span>,
-        evens: <span role="img" className="mrxs fsxl clst">0 2 4</span>
+        odds: <span role="img" className="mrxs fsxl clst">1 3 5...</span>,
+        evens: <span role="img" className="mrxs fsxl clst">0 2 4...</span>
     }), []);
     
     const claimGroups = useMemo(() => ({
@@ -155,12 +155,12 @@ const Claims = ({ game_id }) => {
             { name: "sixx", display: "ALL 60s", description: "ALL numbers from 60-69." },
             { name: "sevenx", display: "ALL 70s", description: "ALL numbers from 70-79." },
             { name: "eightx", display: "ALL 80s", description: "ALL numbers from 80-89." },
-            { name: "minmax", display: "MIN-MAX", description: "SMALLEST & LARGEST number." },
             { name: "triveni", display: "TRIVENI", description: "ANY 1 number from EACH of the 3 rows." },    
         ],
         3: [
             { name: "tower", display: "TOWER", description: "ALL 3 from ANY 1 column." },
             { name: "earlyfive", display: "EARLY FIVE", description: "ANY 5." },
+            { name: "minmax", display: "MIN-MAX", description: "SMALLEST & LARGEST number." },
             { name: "firsts", display: "FIRSTS", description: "1st from ALL 3 rows." },
             { name: "seconds", display: "SECONDS", description: "2nd from ALL 3 rows." },
             { name: "thirds", display: "THIRDS", description: "3rd from ALL 3 rows." },
@@ -178,12 +178,12 @@ const Claims = ({ game_id }) => {
             { name: "breakfast", display: "BREAK-FAST", description: "ALL numbers in FIRST 3 columns." },
             { name: "lunch", display: "LUNCH", description: "ALL numbers in MIDDLE 3 columns." },
             { name: "dinner", display: "DINNER", description: "ALL numbers in LAST 3 columns." },
+            { name: "lucky", display: "LUCKY 13", description: "NO MATCH in the first 13 calls." },
             { name: "singles", display: "SINGLES", description: "ALL numbers with NO number on LEFT and RIGHT of it." },
         ],
         5: [
             { name: "couples", display: "COUPLES", description: "ALL numbers with ANOTHER number beside it." },
             { name: "earlyten", display: "EARLY TEN", description: "ANY 10 numbers." },
-            { name: "lucky", display: "LUCKY 13", description: "NO MATCH in the first 13 calls." },
             { name: "sides", display: "SIDES", description: "1st & 5th from TOP, MIDDLE, BOTTOM rows." },
             { name: "twolanes", display: "NEXT 2 SIDES", description: "2nd & 4th from TOP, MIDDLE, BOTTOM rows." },
             { name: "day", display: "DAY", description: "ALL numbers in FISRT 5 columns." },
