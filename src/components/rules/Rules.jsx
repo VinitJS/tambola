@@ -1,5 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import './Rules.css';
+import { ReactComponent as MiddleLastIcon } from '../../assets/claims/middlelast.svg';
 
 
 const Rules = React.memo(() => {
@@ -21,6 +23,10 @@ const Rules = React.memo(() => {
                 <li className="frow mbm">
                     <span role="img" aria-label="one left claim" className="fsxxl">✌</span>
                     <p className="mlm">Claim ONE LEFT needs 2 chances and gives double points</p>
+                </li>
+                <li className="frow mbm">
+                    <MiddleLastIcon className="mtm ticket_icon" />
+                    <p className="mlm">To learn more about a claim, TAP on the figure beside it</p>
                 </li>
             </ul>
         </div>
