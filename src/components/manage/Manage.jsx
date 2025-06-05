@@ -18,7 +18,7 @@ const Manage = () => {
             (snapshot) => {
                 if (!snapshot.exists) {
                     dispatch(resetGame())
-                    navigate("/");
+                    navigate("/", { replace: true });
                 } else {
                     const { start, error } = snapshot.data();
                     setLoading(start);
@@ -65,7 +65,7 @@ const Manage = () => {
             return setLoading(false);
         }
         
-        if (window.confirm("Press OK to start numbers to be called out.")) {
+        if (window.confirm("Press OK to start the game. Numbers will be called out in 3 minutes.")) {
             try {
                 await firestore.collection("play").doc(id).update({
                     speed,

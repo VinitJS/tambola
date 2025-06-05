@@ -196,7 +196,7 @@ const Claims = ({ game_id }) => {
         6: [
             { name: "snow", display: "SNOW", description: "FIRST number in EACH column." },
             { name: "bush", display: "BUSH", description: "LAST number in EACH column." },
-            { name: "triangle", display: "TRIANGLE", description: "3rd in TOP row, 2nd, 3rd, 4th in MIDDLE row, AL 5 in BOTTOM row." },
+            { name: "triangle", display: "TRIANGLE", description: "3rd in TOP row, 2nd, 3rd, 4th in MIDDLE row, ALL 5 in BOTTOM row." },
             { name: "cone", display: "CONE", description: "ALL 5 in TOP row, 2nd, 3rd, 4th in MIDDLE row, 3rd in BOTTOM row." },
             { name: "alternate", display: "ALT", description: "1st, 3rd, 5th in TOP and BOTTOM row, 2nd, 4th in MIDDLE row." },
             { name: "border", display: "BORDER", description: "ALL numbers on the BORDER." },
@@ -467,7 +467,7 @@ const Claims = ({ game_id }) => {
             <div className="card-body tac">
                 {Object.entries(claimGroups)?.map(([points, claimList]) => (
                     <div key={points} className="section">
-                        <div className="cl">{players_count * Number(points)} points</div>
+                        <div className="clst">{players_count * Number(points)} points</div>
                         {claimList?.map(claim => (
                             <div key={claim.name} className="claim w100pc frow faic fjcsb">
                                 <button className="info">

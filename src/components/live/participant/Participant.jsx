@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { updateCoins } from '../../../redux/coins.reducer';
 import { resetGame, updateGame } from '../../../redux/game.reducer';
 import { updatePlayers } from '../../../redux/players.reducer';
@@ -13,11 +13,13 @@ import Claims from '../../claims/Claims';
 import Invite from '../../invite/Invite';
 import { useNavigate } from 'react-router-dom';
 import { updateTicket } from '../../../redux/ticket.reducer';
+import Host from '../../host/host';
 
 const Participant = ({ game_id }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const id = useSelector(state => state.user.id);
+    const game_by = useSelector(state => state.game.game_by);
     useEffect(() => {
         const unsubscribe = firestore
             .collection("call")
@@ -71,12 +73,14 @@ const Participant = ({ game_id }) => {
     }, [game_id, id, dispatch, navigate]);
 
     return <div className="fcol faic">
-        <Rules />
+        <h2 className="title co mtm tac">{game_by}'s Game</h2>
         <Invite/>
+        <Rules />
         <Claims game_id={game_id} />
         <Tsection game_id={game_id} />
         <Board />
         <Players game_id={game_id} />
+        <Host/>
         <div className="tac mtm mbm">
             <p className="ps brxl">
                 Game designed by {' '}

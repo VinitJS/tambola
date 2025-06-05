@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -12,7 +11,7 @@ const Navbar = () => {
         <nav className="Navbar w100pc">
             <div className="nav frow fjcsb">
                 <button 
-                    onClick={() => id && navigate(`/`)} 
+                    onClick={() => id && navigate(`/${id}`)} 
                     className="btn pm cy b w100pc mxs bcd" 
                     disabled={!id}
                 >

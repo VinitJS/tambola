@@ -16,7 +16,7 @@ const Game = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (play_id && id && play_id === id) navigate(`/${play_id}`);
+        if (play_id && id && play_id === id) navigate(`/${play_id}`, { replace: true });
     }, [play_id, id, navigate]);
 
     const handleClick = async () => {
@@ -40,7 +40,7 @@ const Game = () => {
                 });
             }
     
-            navigate(`/${id}`);
+            navigate(`/${id}`, { replace: true });
         } catch (error) {
             console.error("Error setting up game:", error);
         } finally {
@@ -65,7 +65,7 @@ const Game = () => {
                 </button>
             </div>
             <div className="frow fjcc">
-                <button className="btn btn-l mm" onClick={() => navigate(-1)}>
+                <button className="btn btn-l mm" onClick={() => navigate(-2)}>
                     Cancel
                 </button>
                 <button className="btn btn-y mm" disabled={!id || loading} onClick={handleClick}>

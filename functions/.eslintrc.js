@@ -11,7 +11,7 @@ module.exports = {
     "google",
   ],
   rules: {
-    "max-len": ["error", {"code": 120}],
+    "max-len": "off",
     "require-jsdoc": "off",
     "no-restricted-globals": ["error", "name", "length"],
     "prefer-arrow-callback": "error",

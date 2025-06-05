@@ -223,21 +223,13 @@ code {
 }
 
 .bcgd {
-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#fceabb+0,fccd4d+50,f8b500+51,fbdf93+100;Orange+3D+%235 */
-background: var(--cdarker); /* Old browsers */
-background: -moz-linear-gradient(45deg,  var(--cdarker) 0%, var(--cdarker) 50%, var(--cdark) 51%, var(--cdark) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(45deg,  var(--cdarker) 0%,var(--cdarker) 50%,var(--cdark) 51%,var(--cdark) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(45deg,  var(--cdarker) 0%,var(--cdarker) 50%,var(--cdark) 51%,var(--cdark) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background: var(--cdarker); /* Fallback for very old browsers */
+  background: linear-gradient(45deg, var(--cdarker) 0%, var(--cdarker) 50%, var(--cdark) 51%, var(--cdark) 100%);
 }
 
 .bcgg {
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e6f0a3+0,d2e638+50,c3d825+51,dbf043+100;Green+Gloss+%232 */
-background: #445544; /* Old browsers */
-background: -moz-linear-gradient(-45deg,  #445544 0%, #445544 50%, #334433 51%, #334433 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg,  #445544 0%,#445544 50%,#334433 51%,#334433 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg,  #445544 0%,#445544 50%,#334433 51%,#334433 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6f0a3', endColorstr='#dbf043',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background: #445544; /* Fallback for very old browsers */
+  background: linear-gradient(135deg, #445544 0%, #445544 50%, #334433 51%, #334433 100%);
 }
 
 .b {
