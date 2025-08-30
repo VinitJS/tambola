@@ -1,23 +1,26 @@
 .Ticket {
     position: -webkit-sticky;
     position: sticky;
-    bottom: 0px;
+    top: 5px;
+    bottom: 40px;
     z-index: 2;
     margin: auto;
 }
 
 .Ticket > .grid {
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 10px 10px 0px 0px;
     padding: 5px;
     width: 330px;
 }
 
 .Ticket > .grid > .trow {
     white-space: nowrap;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
 }
 
 .Ticket > .grid > .trow > .tcell {
-    width: 35px;
+    min-width: 11%;
     height: 30px;
     margin: 1px;
     font-size: 20px;

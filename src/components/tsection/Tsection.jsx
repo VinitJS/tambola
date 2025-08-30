@@ -126,12 +126,12 @@ const Tsection = ({ game_id }) => {
         (game_id === play_id && version === ticket_version)
             ?
             <>
-                <Ticketbar />
                 <Ticket />
+                <Ticketbar />
             </>
             :
             <div className='Join'>
-                <button disabled={loading || !id} className="btn btn-o bd mxl pxl fsxl" onClick={handleJoin}>GET TICKET</button>
+                <button disabled={loading || !id} className="btn btn-o bd mxl pxl fsxl" onClick={handleJoin}>JOIN GAME</button>
             </div>
     );
 };

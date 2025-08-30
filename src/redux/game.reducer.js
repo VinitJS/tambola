@@ -5,8 +5,9 @@ const getInitialState = () => ({
     play_id: "",
     version: 0,
     coin_count: 0,
-    speed: 10,
-    players_count: 0
+    speed: 12,
+    players_count: 0,
+    difficulty: "Beginner"
 });
 
 const gameSlice = createSlice({
@@ -16,7 +17,7 @@ const gameSlice = createSlice({
         resetGame() {
             return getInitialState()
         },
-        updateGame(state, { payload: { game_by, play_id, version, coin_count, speed, players_count, message } }) {
+        updateGame(state, { payload: { game_by, play_id, version, coin_count, speed, players_count, difficulty } }) {
             if ((game_by !== undefined) && game_by !== state.game_by) {
                 state.game_by = game_by;
             }
@@ -35,8 +36,8 @@ const gameSlice = createSlice({
             if ((players_count !== undefined) && players_count !== state.players_count) {
                 state.players_count = players_count;
             }
-            if ((message !== undefined) && message !== state.message) {
-                state.message = message;
+            if ((difficulty !== undefined) && difficulty !== state.difficulty) {
+                state.difficulty = difficulty;
             }
         }
     }

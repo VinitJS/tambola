@@ -40,16 +40,20 @@ import { ReactComponent as SecondsIcon } from '../../assets/claims/seconds.svg';
 import { ReactComponent as ThirdsIcon } from '../../assets/claims/thirds.svg';
 import { ReactComponent as FourthsIcon } from '../../assets/claims/fourths.svg';
 import { ReactComponent as FifthsIcon } from '../../assets/claims/fifths.svg';
-import { ReactComponent as CharminarIcon } from '../../assets/claims/charminar.svg';
-import { ReactComponent as FiveStarIcon } from '../../assets/claims/fivestar.svg';
-import { ReactComponent as RainIcon } from '../../assets/claims/rain.svg';
-import { ReactComponent as SnowIcon } from '../../assets/claims/snow.svg';
-import { ReactComponent as BushIcon } from '../../assets/claims/bush.svg';
-import { ReactComponent as TriveniIcon } from '../../assets/claims/triveni.svg';
+import { ReactComponent as CornersIcon } from '../../assets/claims/corners.svg';
+import { ReactComponent as CrossIcon } from '../../assets/claims/cross.svg';
+import { ReactComponent as Eachcol1Icon } from '../../assets/claims/eachcol1.svg';
+import { ReactComponent as FirstColumnIcon } from '../../assets/claims/firstColumn.svg';
+import { ReactComponent as LastColumnIcon } from '../../assets/claims/lastColumn.svg';
+import { ReactComponent as Eachrow1Icon } from '../../assets/claims/eachrow1.svg';
+import { ReactComponent as Eachrow2Icon } from '../../assets/claims/eachrow2.svg';
+import { ReactComponent as Eachrow3Icon } from '../../assets/claims/eachrow3.svg';
+import { ReactComponent as Eachrow4Icon } from '../../assets/claims/eachrow4.svg';
 import { ReactComponent as CouplesIcon } from '../../assets/claims/couples.svg';
 import { ReactComponent as SinglesIcon } from '../../assets/claims/singles.svg';
 import { ReactComponent as ZebraIcon } from '../../assets/claims/zebra.svg';
 import { ReactComponent as NewsIcon } from '../../assets/claims/news.svg';
+import { ReactComponent as PlusIcon } from '../../assets/claims/plus.svg';
 import { ReactComponent as AlternateIcon } from '../../assets/claims/alternate.svg';
 import { ReactComponent as TriangleIcon } from '../../assets/claims/triangle.svg';
 import { ReactComponent as ConeIcon } from '../../assets/claims/cone.svg';
@@ -60,6 +64,7 @@ const Claims = ({ game_id }) => {
     const dispatch = useDispatch();
     // Get state from Redux store
     const { claims, chances_left, players_count } = useSelector((state) => state.claims);
+    const { difficulty } = useSelector((state) => state.game);
     const coins = useSelector((state) => state.coins.coins);
     const ticket = useSelector((state) => state.ticket.ticket);
     const { id, name } = useSelector((state) => state.user);
@@ -103,18 +108,22 @@ const Claims = ({ game_id }) => {
         thirds: <ThirdsIcon className="mrs" />,
         fourths: <FourthsIcon className="mrs" />,
         fifths: <FifthsIcon className="mrs" />,
-        charminar: <CharminarIcon className="mrs" />,
-        fivestar: <FiveStarIcon className="mrs" />,
-        rain: <RainIcon className="mrs" />,
-        snow: <SnowIcon className="mrs" />,
-        bush: <BushIcon className="mrs" />,
-        triveni: <TriveniIcon className="mrs" />,
+        corners: <CornersIcon className="mrs" />,
+        cross: <CrossIcon className="mrs" />,
+        eachcol1: <Eachcol1Icon className="mrs" />,
+        firstColumn: <FirstColumnIcon className="mrs" />,
+        lastColumn: <LastColumnIcon className="mrs" />,
+        eachrow1: <Eachrow1Icon className="mrs" />,
+        eachrow2: <Eachrow2Icon className="mrs" />,
+        eachrow3: <Eachrow3Icon className="mrs" />,
+        eachrow4: <Eachrow4Icon className="mrs" />,
         singles: <SinglesIcon className="mrs" />,
         couples: <CouplesIcon className="mrs" />,
         twolanes: <TwolanesIcon className="mrs" />,
         sides: <SidesIcon className="mrs" />,
         zebra: <ZebraIcon className="mrs" />,
         news: <NewsIcon className="mrs" />,
+        plus: <PlusIcon className="mrs" />,
         alternate: <AlternateIcon className="mrs" />,
         triangle: <TriangleIcon className="mrs" />,
         cone: <ConeIcon className="mrs" />
@@ -131,79 +140,121 @@ const Claims = ({ game_id }) => {
         evens: <span role="img" className="mrxs fsxl clst">0 2 4...</span>
     }), []);
     
-    const claimGroups = useMemo(() => ({
-        1: [
-            { name: "early", display: "EARLY", description: "ANY 1 number." },
-            { name: "topFirst", display: "TOP FIRST", description: "FIRST from TOP row." },
-            { name: "topCenter", display: "TOP CENTER", description: "MIDDLE from TOP row." },
-            { name: "topLast", display: "TOP LAST", description: "LAST from TOP row." },
-            { name: "middleFirst", display: "MIDDLE FIRST", description: "FIRST from MIDDLE row." },
-            { name: "middleCenter", display: "MIDDLE CENTER", description: "MIDDLE from MIDDLE row." },
-            { name: "middleLast", display: "MIDDLE LAST", description: "LAST from MIDDLE row." },
-            { name: "bottomFirst", display: "BOTTOM FIRST", description: "FIRST from BOTTOM row." },
-            { name: "bottomCenter", display: "BOTTOM CENTER", description: "MIDDLE from BOTTOM row." },
-            { name: "bottomLast", display: "BOTTOM LAST", description: "LAST from BOTTOM row." },
-            { name: "twin", display: "TWIN", description: "ANY 1 number from 11, 22, 33, 44, 55, 66, 77, 88." },
-        ],
-        2: [
-            { name: "zerox", display: "ALL UNITS", description: "ALL numbers from 0-9." },
-            { name: "onex", display: "ALL 10s", description: "ALL numbers from 10-19." },
-            { name: "twox", display: "ALL 20s", description: "ALL numbers from 20-29." },
-            { name: "threex", display: "ALL 30s", description: "ALL numbers from 30-39." },
-            { name: "fourx", display: "ALL 40s", description: "ALL numbers from 40-49." },
-            { name: "fivex", display: "ALL 50s", description: "ALL numbers from 50-59." },
-            { name: "sixx", display: "ALL 60s", description: "ALL numbers from 60-69." },
-            { name: "sevenx", display: "ALL 70s", description: "ALL numbers from 70-79." },
-            { name: "eightx", display: "ALL 80s", description: "ALL numbers from 80-89." },
-            { name: "triveni", display: "TRIVENI", description: "ANY 1 number from EACH of the 3 rows." },    
-        ],
-        3: [
-            { name: "tower", display: "TOWER", description: "ALL 3 from ANY 1 column." },
-            { name: "earlyfive", display: "EARLY FIVE", description: "ANY 5." },
-            { name: "minmax", display: "MIN-MAX", description: "SMALLEST & LARGEST number." },
-            { name: "firsts", display: "FIRSTS", description: "1st from ALL 3 rows." },
-            { name: "seconds", display: "SECONDS", description: "2nd from ALL 3 rows." },
-            { name: "thirds", display: "THIRDS", description: "3rd from ALL 3 rows." },
-            { name: "fourths", display: "FOURTHS", description: "4th from ALL 3 rows." },
-            { name: "fifths", display: "FIFTHS", description: "5th from ALL 3 rows." },
-            { name: "news", display: "NEWS", description: "1st & 5th from MIDDLE row, 3rd from TOP & BOTTOM rows." },
-            { name: "charminar", display: "CHAR-MINAR", description: "1st & 5th from TOP & BOTTOM rows." },        
-        ],
-        4: [
-            { name: "fivestar", display: "FIVE STAR", description: "1st & 5th from TOP & BOTTOM rows, 3rd from MIDDLE row)." },
-            { name: "today", display: `TODAY (${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear().toString().slice(-2)})`, description: `Any number from today's date: ${new Date().getDate()} / ${new Date().getMonth() + 1} / ${new Date().getFullYear().toString().slice(-2)}` },
-            { name: "topRow", display: "TOP ROW", description: "ALL 5 numbers from TOP row." },
-            { name: "middleRow", display: "MIDDLE ROW", description: "ALL 5 numbers from MIDDLE row." },
-            { name: "bottomRow", display: "BOTTOM ROW", description: "ALL 5 numbers from BOTTOM row." },
-            { name: "breakfast", display: "BREAK-FAST", description: "ALL numbers in FIRST 3 columns." },
-            { name: "lunch", display: "LUNCH", description: "ALL numbers in MIDDLE 3 columns." },
-            { name: "dinner", display: "DINNER", description: "ALL numbers in LAST 3 columns." },
-            { name: "lucky", display: "LUCKY 13", description: "NO MATCH in the first 13 calls." },
-            { name: "singles", display: "SINGLES", description: "ALL numbers with NO number on LEFT and RIGHT of it." },
-        ],
-        5: [
-            { name: "couples", display: "COUPLES", description: "ALL numbers with ANOTHER number beside it." },
-            { name: "earlyten", display: "EARLY TEN", description: "ANY 10 numbers." },
-            { name: "sides", display: "SIDES", description: "1st & 5th from TOP, MIDDLE, BOTTOM rows." },
-            { name: "twolanes", display: "NEXT 2 SIDES", description: "2nd & 4th from TOP, MIDDLE, BOTTOM rows." },
-            { name: "day", display: "DAY", description: "ALL numbers in FISRT 5 columns." },
-            { name: "night", display: "NIGHT", description: "ALL numbers in LAST 5 columns." },
-            { name: "zebra", display: "ZEBRA", description: "ALL numbers in columns 1, 3, 5, 7, 9." },
-            { name: "odds", display: "ODDS", description: "ALL ODD numbers." },
-            { name: "evens", display: "EVENS", description: "ALL EVEN numbers." },
-            { name: "rain", display: "RAIN", description: "1 number in EACH column." },    
+    const claimGroupsBeginner = useMemo(() => ({
+        7: [
+            { name: "fullHouse", display: "FULL HOUSE", description: "All 15 numbers." },
         ],
         6: [
-            { name: "snow", display: "SNOW", description: "FIRST number in EACH column." },
-            { name: "bush", display: "BUSH", description: "LAST number in EACH column." },
-            { name: "triangle", display: "TRIANGLE", description: "3rd in TOP row, 2nd, 3rd, 4th in MIDDLE row, ALL 5 in BOTTOM row." },
-            { name: "cone", display: "CONE", description: "ALL 5 in TOP row, 2nd, 3rd, 4th in MIDDLE row, 3rd in BOTTOM row." },
-            { name: "alternate", display: "ALT", description: "1st, 3rd, 5th in TOP and BOTTOM row, 2nd, 4th in MIDDLE row." },
-            { name: "border", display: "BORDER", description: "ALL numbers on the BORDER." },
-            { name: "oneleft", display: "ONE LEFT", description: "ANY 14 numbers (takes away 2 chances, gives double the points)." },
+            { name: "oneleft", display: "ONE LEFT", description: "Any 14 numbers (takes away 2 chances, gives double the points)." },
+            { name: "border", display: "BORDER", description: "All numbers on the border of the ticket." },
         ],
+        5: [
+            { name: "eachrow4", display: "4 PER ROW", description: "12 numbers, Any 4 numbers from each of the 3 rows." },
+            { name: "evens", display: "EVENS", description: "All even numbers on the ticket." },
+            { name: "odds", display: "ODDS", description: "All odd numbers on the ticket." },
+            { name: "earlyten", display: "EARLY TEN", description: "Any 10 numbers on the ticket." },
+        ],
+        4: [
+            { name: "eachrow3", display: "3 PER ROW", description: "9 numbers, Any 3 numbers from each of the 3 rows." },
+            { name: "lucky", display: "LUCKY 13", description: "No match in the first 13 numbers on the board marked in red." },
+            { name: "topRow", display: "TOP ROW", description: "All 5 numbers from Top row." },
+            { name: "middleRow", display: "MIDDLE ROW", description: "All 5 numbers from Middle row." },
+            { name: "bottomRow", display: "BOTTOM ROW", description: "All 5 numbers from Bottom row." },
+            { name: "dinner", display: "DINNER", description: "All numbers in Last 3 columns." },
+            { name: "lunch", display: "LUNCH", description: "All numbers in Middle 3 columns." },
+            { name: "breakfast", display: "BREAKFAST", description: "All numbers in First 3 columns." },
+        ],
+        3: [
+            { name: "eachrow2", display: "2 PER ROW", description: "6 numbers, Any 2 numbers from each of the 3 rows." },
+            { name: "earlyfive", display: "EARLY FIVE", description: "Any 5 numbers from the ticket." },
+        ],
+        2: [
+            { name: "eachrow1", display: "1 PER ROW", description: "3 numbers, Any 1 number from each of the 3 rows." },
+            { name: "minmax", display: "MIN-MAX", description: "Smallest and Largest number on the ticket." },
+        ],
+        1: [
+            { name: "twin", display: "TWIN", description: "Any 1 number from 11, 22, 33, 44, 55, 66, 77, 88." },
+            { name: "early", display: "EARLY", description: "Any 1 number." },
+        ]
+    }), []);
+    
+    const claimGroups = useMemo(() => ({
         7: [
-            { name: "fullHouse", display: "FULL HOUSE", description: "ALL 15 numbers." },
+            { name: "fullHouse", display: "FULL HOUSE", description: "All 15 numbers." },
+        ],
+        6: [
+            { name: "oneleft", display: "ONE LEFT", description: "Any 14 numbers (takes away 2 chances, gives double the points)." },
+            { name: "border", display: "BORDER", description: "All numbers on the border of the ticket." },
+            { name: "cone", display: "CONE", description: "9 number, All 5 numbers from the Top row, 2nd, 3rd, and 4th numbers from the Middle row, middle number from the Bottom row." },
+            { name: "triangle", display: "TRIANGLE", description: "9 number, Middle number from the Top row, 2nd, 3rd, 4th from the Middle row, and All 5 numbers from the Bottom row." },
+            { name: "alternate", display: "ALT", description: "8 number, 1st, 3rd, 5th numbers from the Top and Bottom rows, 2nd and 4th numbers from the Middle row." },
+            { name: "lastColumn", display: "BUSH", description: "9 numbers, Last number from each column." },
+            { name: "firstColumn", display: "SNOW", description: "9 numbers, First number from each column." },
+        ],
+        5: [
+            { name: "eachcol1", display: "RAIN", description: "9 numbers, Any 1 number from each column." },    
+            { name: "eachrow4", display: "4 PER ROW", description: "12 numbers, Any 4 numbers from each of the 3 rows." },
+            { name: "evens", display: "EVENS", description: "All even numbers on the ticket." },
+            { name: "odds", display: "ODDS", description: "All odd numbers on the ticket." },
+            { name: "zebra", display: "ZEBRA", description: "All numbers from 1st, 3rd, 5th, 7th, and 9th columns." },
+            { name: "night", display: "NIGHT", description: "ALL numbers from the last 5 columns." },
+            { name: "day", display: "DAY", description: "ALL numbers from the 1st 5 columns." },
+            { name: "twolanes", display: "NEXT 2 SIDES", description: "6 numbers, 2nd & 4th from Top, Middle, and Bottom rows." },
+            { name: "sides", display: "SIDES", description: "6 numbers, First and Last numbers from Top, Middle, and Bottom rows." },
+            { name: "earlyten", display: "EARLY TEN", description: "Any 10 numbers on the ticket." },
+            { name: "couples", display: "COUPLES", description: "All numbers in pairs." },
+        ],
+        4: [
+            { name: "singles", display: "SINGLES", description: "All numbers with No number on the left and right side of it." },
+            { name: "eachrow3", display: "3 PER ROW", description: "9 numbers, Any 3 numbers from each of the 3 rows." },
+            { name: "lucky", display: "LUCKY 13", description: "No match in the first 13 numbers on the board marked in red." },
+            { name: "topRow", display: "TOP ROW", description: "All 5 numbers from Top row." },
+            { name: "middleRow", display: "MIDDLE ROW", description: "All 5 numbers from Middle row." },
+            { name: "bottomRow", display: "BOTTOM ROW", description: "All 5 numbers from Bottom row." },
+            { name: "dinner", display: "DINNER", description: "All numbers in Last 3 columns." },
+            { name: "lunch", display: "LUNCH", description: "All numbers in Middle 3 columns." },
+            { name: "breakfast", display: "BREAKFAST", description: "All numbers in First 3 columns." },
+            { name: "plus", display: "PLUS", description: "Middle number from Top & Bottom rows, First, Center, and Last number from Middle row." },
+            { name: "cross", display: "CROSS", description: "First and Last numbers from Top & Bottom rows, Middle number from Middle row)." },
+        ],
+        3: [
+            { name: "earlyfive", display: "EARLY FIVE", description: "Any 5 numbers from the ticket." },
+            { name: "eachrow2", display: "2 PER ROW", description: "6 numbers, Any 2 numbers from each of the 3 rows." },
+            { name: "corners", display: "CORNERS", description: "First and Last numbers from Top & Bottom rows." },
+            { name: "news", display: "MIDDLES", description: "Middle number from Top & Bottom rows, 1st & Last number from Middle row." },
+            { name: "fifths", display: "FIFTHS", description: "5th from all 3 rows." },
+            { name: "fourths", display: "FOURTHS", description: "4th from all 3 rows." },
+            { name: "thirds", display: "THIRDS", description: "3rd from all 3 rows." },
+            { name: "seconds", display: "SECONDS", description: "2nd from all 3 rows." },
+            { name: "firsts", display: "FIRSTS", description: "1st from all 3 rows." },
+            { name: "today", display: `TODAY (${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear().toString().slice(-2)})`, description: `Any number from today's date: ${new Date().getDate()} / ${new Date().getMonth() + 1} / ${new Date().getFullYear().toString().slice(-2)}` },
+            { name: "tower", display: "TOWER", description: "3 numbers from any 1 column." },
+        ],
+        2: [
+            { name: "minmax", display: "MIN-MAX", description: "Smallest and Largest number on the ticket." },
+            { name: "eachrow1", display: "1 PER ROW", description: "3 numbers, Any 1 number from each of the 3 rows." },
+            { name: "eightx", display: "ALL 80s", description: "All numbers from 80-89." },
+            { name: "sevenx", display: "ALL 70s", description: "All numbers from 70-79." },
+            { name: "sixx", display: "ALL 60s", description: "All numbers from 60-69." },
+            { name: "fivex", display: "ALL 50s", description: "All numbers from 50-59." },
+            { name: "fourx", display: "ALL 40s", description: "All numbers from 40-49." },
+            { name: "threex", display: "ALL 30s", description: "All numbers from 30-39." },
+            { name: "twox", display: "ALL 20s", description: "All numbers from 20-29." },
+            { name: "onex", display: "ALL 10s", description: "All numbers from 10-19." },
+            { name: "zerox", display: "ALL UNITS", description: "All numbers from 0-9." },
+        ],
+        1: [
+            { name: "twin", display: "TWIN", description: "Any 1 number from 11, 22, 33, 44, 55, 66, 77, 88." },
+            { name: "topFirst", display: "TOP FIRST", description: "First number from top row." },
+            { name: "topCenter", display: "TOP CENTER", description: "Middle number from top row." },
+            { name: "topLast", display: "TOP LAST", description: "Last number from top row." },
+            { name: "middleFirst", display: "MIDDLE FIRST", description: "First number from middle row." },
+            { name: "middleCenter", display: "MIDDLE CENTER", description: "Middle number from middle row." },
+            { name: "middleLast", display: "MIDDLE LAST", description: "Last number from last row." },
+            { name: "bottomFirst", display: "BOTTOM FIRST", description: "First number from bottom row." },
+            { name: "bottomCenter", display: "BOTTOM CENTER", description: "Middle number from bottom row." },
+            { name: "bottomLast", display: "BOTTOM LAST", description: "Last number from bottom row." },
+            { name: "early", display: "EARLY", description: "Any 1 number." },
         ]
     }), []);
 
@@ -295,8 +346,17 @@ const Claims = ({ game_id }) => {
                 case "minmax":
                     success = [[ticket[0][0], ticket[1][0], ticket[2][0]].find(element => Array.isArray(element)), [ticket[2][8], ticket[1][8], ticket[0][8]].find(element => Array.isArray(element))].every(([value, marked]) => marked && coinsSet.has(value))
                     break;
-                case "triveni":
-                    success = ticket[0].some(cell => Array.isArray(cell) && cell[1] && coinsSet.has(cell[0])) && ticket[1].some(cell => Array.isArray(cell) && cell[1] && coinsSet.has(cell[0])) && ticket[2].some(cell => Array.isArray(cell) && cell[1] && coinsSet.has(cell[0]));
+                case "eachrow1":
+                    success = ticket.every(row => row.filter(cell => Array.isArray(cell) && cell[1] && coinsSet.has(cell[0])).length >= 1);
+                    break;
+                case "eachrow2":
+                    success = ticket.every(row => row.filter(cell => Array.isArray(cell) && cell[1] && coinsSet.has(cell[0])).length >= 2);
+                    break;
+                case "eachrow3":
+                    success = ticket.every(row => row.filter(cell => Array.isArray(cell) && cell[1] && coinsSet.has(cell[0])).length >= 3);
+                    break;
+                case "eachrow4":
+                    success = ticket.every(row => row.filter(cell => Array.isArray(cell) && cell[1] && coinsSet.has(cell[0])).length >= 4);
                     break;
                 case "tower":
                     success = [0, 1, 2, 3, 4, 5, 6, 7, 8].some(col => [0, 1, 2].every(row => Array.isArray(ticket[row][col]) && ticket[row][col][1] && coinsSet.has(ticket[row][col][0])));
@@ -324,18 +384,22 @@ const Claims = ({ game_id }) => {
                 case "today":
                     const today = [new Date().getDate(), new Date().getMonth() + 1, Number(new Date().getFullYear().toString().slice(-2))]
                     success = ticket.flat().some(element => Array.isArray(element) && element[1] && coinsSet.has(element[0]) && today.includes(element[0]));
-                break;    
+                break;
                 case "news":
                     const newsNumbers = ticket.flat().filter(element => Array.isArray(element));
                     success = [2, 5, 9, 12].every(i => newsNumbers[i][1] && coinsSet.has(newsNumbers[i][0]));
                     break;
-                case "charminar":
-                    const charminarNumbers = ticket.flat().filter(element => Array.isArray(element));
-                    success = [0, 4, 10, 14].every(i => charminarNumbers[i][1] && coinsSet.has(charminarNumbers[i][0]));
+                case "plus":
+                    const plusNumbers = ticket.flat().filter(element => Array.isArray(element));
+                    success = [2, 5, 7, 9, 12].every(i => plusNumbers[i][1] && coinsSet.has(plusNumbers[i][0]));
                     break;
-                case "fivestar":
-                    const fivestarNumbers = ticket.flat().filter(element => Array.isArray(element));
-                    success = [0, 4, 7, 10, 14].every(i => fivestarNumbers[i][1] && coinsSet.has(fivestarNumbers[i][0]));
+                case "corners":
+                    const cornersNumbers = ticket.flat().filter(element => Array.isArray(element));
+                    success = [0, 4, 10, 14].every(i => cornersNumbers[i][1] && coinsSet.has(cornersNumbers[i][0]));
+                    break;
+                case "cross":
+                    const crossNumbers = ticket.flat().filter(element => Array.isArray(element));
+                    success = [0, 4, 7, 10, 14].every(i => crossNumbers[i][1] && coinsSet.has(crossNumbers[i][0]));
                     break;
                 case "topRow":
                     success = 
@@ -391,13 +455,13 @@ const Claims = ({ game_id }) => {
                 case "earlyten":
                     success = ticket.flat().filter(element => Array.isArray(element) && element[1] && coinsSet.has(element[0])).length > 9;
                     break;
-                case "rain":
+                case "eachcol1":
                     success = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(col => [ticket[0][col], ticket[1][col], ticket[2][col]].some(cell => Array.isArray(cell) && cell[1] && coinsSet.has(cell[0]))).every(Boolean);
                     break;
-                case "snow":
+                case "firstColumn":
                     success = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(col => [ticket[0][col], ticket[1][col], ticket[2][col]].find(cell => Array.isArray(cell))).every(([value, marked]) => marked && coinsSet.has(value));
                     break;
-                case "bush":
+                case "lastColumn":
                     success = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(col => [ticket[2][col], ticket[1][col], ticket[0][col]].find(cell => Array.isArray(cell))).every(([value, marked]) => marked && coinsSet.has(value));
                     break;
                 case "triangle":
@@ -465,14 +529,14 @@ const Claims = ({ game_id }) => {
     return (
         <div className="Claims mtm w100pc">
             <div className="card-body tac">
-                {Object.entries(claimGroups)?.map(([points, claimList]) => (
+                {Object.entries(difficulty === "Beginner" ? claimGroupsBeginner : claimGroups)?.sort((a, b) => Number(b[0]) - Number(a[0])).map(([points, claimList]) => (
                     <div key={points} className="section">
                         <div className="clst">{players_count * Number(points)} points</div>
                         {claimList?.map(claim => (
                             <div key={claim.name} className="claim w100pc frow faic fjcsb">
                                 <button className="info">
                                     {svgs[claim.name] || emojis[claim.name]}
-                                    <span className="tooltip ps brs">{claim.display}<br/>{claim.description}</span>
+                                    <span className="tooltip ps brs"><b>{claim.display}</b><br/>{claim.description}</span>
                                 </button>
                                 {claims && claims[claim.name] ? (
                                     <span className="claimName bclst brs fgr1 op50pc cd">

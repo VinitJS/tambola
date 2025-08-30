@@ -13,7 +13,7 @@ const Board = React.memo(() => {
     }, [coins]);
 
     return (
-        <div className="Drawn fcol mtxs">
+        <div className="Drawn fcol mbs">
             <div className="board-border bcd tac">
                 <div className="board fcol fwrap w100pc">
                     {numero.map((value, index) => (

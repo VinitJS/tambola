@@ -11,7 +11,7 @@ const Host = () => {
                 Enjoying?
             </h3>
             <p className="mtm">
-                You can host your own game and invite friends to join
+                Host your own game and invite friends to join
             </p>
             <button 
                 onClick={() => id && navigate(`/${id}`)} 

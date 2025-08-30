@@ -36,7 +36,7 @@ const Participant = ({ game_id }) => {
                         coins,
                         players,
                         claims,
-                        message
+                        difficulty
                     } = snapshot.data();
 
                     dispatch(updateCoins({
@@ -49,7 +49,7 @@ const Participant = ({ game_id }) => {
                         version,
                         coin_count: coins.length,
                         players_count: Object.keys(players).length,
-                        message
+                        difficulty
                     }));
 
                     dispatch(updateTicket({
@@ -76,9 +76,9 @@ const Participant = ({ game_id }) => {
         <h2 className="title co mtm tac">{game_by}'s Game</h2>
         <Invite/>
         <Rules />
-        <Claims game_id={game_id} />
-        <Tsection game_id={game_id} />
         <Board />
+        <Tsection game_id={game_id} />
+        <Claims game_id={game_id} />
         <Players game_id={game_id} />
         <Host/>
         <div className="tac mtm mbm">

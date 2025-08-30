@@ -24,14 +24,10 @@ const Changename = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (inputName !== "") {
-            if (name) {
-                dispatch(updateUser({ name: inputName }));
-                navigate(-1);
-            } else {
-                dispatch(updateUser({ name: inputName }));
-            }
-        }
+        const name = inputName.trim()
+        if (!name) return;
+        dispatch(updateUser({ name }));
+        navigate(-1);
     };
 
     return (

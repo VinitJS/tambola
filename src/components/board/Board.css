@@ -10,7 +10,7 @@
 }
 
 .Drawn > .board-border >.board > .cell {
-    width: 34px;
+    width: 10%;
     height: 30px;
     margin: 1px;
     border: none;

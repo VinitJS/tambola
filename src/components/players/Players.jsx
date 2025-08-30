@@ -58,7 +58,7 @@ const Players = React.memo(() => {
                     Leaderboard
                     {
                         claims?.fullHouse &&
-                        <a className="btn-link fsxxl co mm frow faic" href={`https://api.whatsapp.com/send?text=${encodeURIComponent((claims.fullHouse ? `Full house 🎟️ ${claims?.fullHouse}\n\n` : "") + topGroups.map((group, idx) => `${medals[idx]} ${group.map(p => p.name).join(", ")}`).join("\n"))}`} target="_blank" rel="noopener noreferrer">⬀</a>
+                        <a className="btn-link fsxxl co mm frow faic" href={`https://api.whatsapp.com/send?text=${encodeURIComponent(topGroups.map((group, idx) => `${medals[idx]} ${group.map(p => p.name).join(", ")}`).join("\n") + `\n\nFull house 🎟️ ${claims?.fullHouse}`)}`} target="_blank" rel="noopener noreferrer">⬀</a>
                     }
                 </h2>
             }

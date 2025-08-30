@@ -13,7 +13,7 @@ const Ticket = () => {
             <div className="grid bco tac">
                 {
                     ticket && ticket.map((row, row_index) => (
-                        <div className="trow frow faic w100pc" key={row_index}>
+                        <div className="trow w100pc" key={row_index}>
                             {
                                 row.map((cell, col_index) => <button 
                                     onClick={() => cell !== -1 && dispatch(toggleTick({ row_index, col_index }))} 
