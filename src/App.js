@@ -14,8 +14,12 @@ import Navbar from './components/navbar/Navbar';
 import { updateUser } from './redux/user.reducer';
 
 function App() {
+  const dispatch = useDispatch();
   const name = useSelector(state => state.user.name);
-  useDispatch(updateUser())
+
+  useEffect(() => {
+    dispatch(updateUser());
+  }, [dispatch]);
 
   return (
     <div className="App fcol faic">
