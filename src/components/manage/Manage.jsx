@@ -8,7 +8,7 @@ const Manage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { id, name } = useSelector((state) => state.user);
-    const { coin_count, speed, players_count, difficulty } = useSelector((state) => state.game);
+    const { coin_count, speed, difficulty } = useSelector((state) => state.game);
     const [loading, setLoading] = useState(false);
     const [started, setStarted] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -140,7 +140,6 @@ const Manage = () => {
                         })}
                     </div>
                 </div>
-                {players_count < 2 && <p className="tac co fss">Minimum 2 players must join to start the game.</p>}
                 <div className="btn-group frow">
                     {started ?
                         <button
@@ -151,7 +150,7 @@ const Manage = () => {
                             Pause
                         </button> :
                         <button
-                            disabled={coin_count === 90 || players_count < 2 || loading}
+                            disabled={coin_count === 90 || loading}
                             onClick={handleStart}
                             className="btn btn-g mm"
                         >
