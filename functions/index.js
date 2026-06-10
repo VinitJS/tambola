@@ -2,63 +2,82 @@ const {onDocumentWritten} = require("firebase-functions/v2/firestore");
 const admin = require("firebase-admin");
 admin.initializeApp();
 const db = admin.firestore();
-const activeGames = {};
-exports.onPlayStart = onDocumentWritten("play/{playId}", async (event) => {
+
+exports.onPlayStart = onDocumentWritten({
+  document: "play/{playId}",
+  timeoutSeconds: 540,
+}, async (event) => {
   const playId = event.params.playId;
   const before = event.data.before?.data() || {};
   const after = event.data.after?.data() || {};
-  if (!before.start && after.start) return startGame(playId, after.speed);
-  if (before.start && !after.start) stopGame(playId);
+  if (!before.start && after.start) {
+    return startGame(playId, after.speed, after.runId);
+  }
   return null;
 });
-function stopGame(playId) {
-  if (activeGames[playId]) {
-    clearInterval(activeGames[playId].interval);
-    delete activeGames[playId];
-  }
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
-async function startGame(playId, speed) {
+
+async function startGame(playId, speed = 12, runId) {
   const allNumbers = Array.from({length: 90}, (_, i) => i);
   let toggle = true;
-  let maxIntervals = Math.floor(500 / speed);
-  activeGames[playId] = {
-    interval: setInterval(async () => {
-      try {
-        maxIntervals--;
-        if (maxIntervals === 0) {
-          await db.collection("play").doc(playId).update({start: false});
-          stopGame(playId);
-          setTimeout(async () => await db.collection("play").doc(playId).update({start: true}), 10000);
-          return;
-        }
-        const callDoc = await db.collection("call").doc(playId).get();
-        const {coins = [], players = {}, version = 0} = callDoc.data() || {};
-        const usedNumbers = new Set(coins);
-        const allTicketNumbers = new Set(Object.values(players).flatMap((player) => player.ticket.filter((e) => e > -1)));
-        const nextNumber = getNextNumber(
-            toggle,
-            Object.values(players).map((player) => player.ticket.flat().filter((e) => e > -1 && !usedNumbers.has(e))),
-            Array.from(allTicketNumbers),
-            allNumbers.filter((n) => !allTicketNumbers.has(n) && !usedNumbers.has(n)),
-            usedNumbers,
-            version%90,
-        );
-        if (nextNumber === null) {
-          await db.collection("play").doc(playId).update({start: false});
-          return stopGame(playId);
-        }
-        toggle = !toggle;
-        await db.collection("call").doc(playId).update({coins: admin.firestore.FieldValue.arrayUnion(nextNumber)});
-      } catch (err) {
-        console.error(`[${playId}] Error Running Game:`, err);
-        stopGame(playId);
-        await db.collection("play").doc(playId).update({
-          start: false,
-          error: err.message || String(err),
-        });
+  const delayMs = Math.max(Number(speed) || 12, 1) * 1000;
+  const maxIntervals = Math.floor(500000 / delayMs);
+
+  try {
+    for (let remaining = maxIntervals; remaining > 0; remaining--) {
+      await sleep(delayMs);
+
+      const playDoc = await db.collection("play").doc(playId).get();
+      const play = playDoc.data() || {};
+      if (!play.start || (runId && play.runId !== runId)) return null;
+
+      const callDoc = await db.collection("call").doc(playId).get();
+      const {coins = [], players = {}, version = 0} = callDoc.data() || {};
+      const playerTickets = Object.values(players)
+          .map((player) => player.ticket || []);
+      const usedNumbers = new Set(coins);
+      const allTicketNumbers = new Set(
+          playerTickets.flatMap((ticket) => ticket.filter((e) => e > -1)),
+      );
+      const nextNumber = getNextNumber(
+          toggle,
+          playerTickets.map((ticket) => ticket.filter((e) => e > -1 && !usedNumbers.has(e))),
+          Array.from(allTicketNumbers),
+          allNumbers.filter((n) => !allTicketNumbers.has(n) && !usedNumbers.has(n)),
+          usedNumbers,
+          version % 90,
+      );
+      if (nextNumber === null) {
+        await db.collection("play").doc(playId).update({start: false});
+        return null;
       }
-    }, speed * 1000),
-  };
+      toggle = !toggle;
+      await db.collection("call").doc(playId).update({
+        coins: admin.firestore.FieldValue.arrayUnion(nextNumber),
+      });
+    }
+
+    await db.collection("play").doc(playId).update({start: false});
+    await sleep(10000);
+    const playDoc = await db.collection("play").doc(playId).get();
+    const play = playDoc.data() || {};
+    if (!play.start && (!runId || play.runId === runId)) {
+      await db.collection("play").doc(playId).update({
+        start: true,
+        runId: `${Date.now()}`,
+      });
+    }
+  } catch (err) {
+    console.error(`[${playId}] Error Running Game:`, err);
+    await db.collection("play").doc(playId).update({
+      start: false,
+      error: err.message || String(err),
+    });
+  }
+  return null;
 }
 
 function pickNumberFromTickets(tickets) {

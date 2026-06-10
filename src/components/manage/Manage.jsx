@@ -39,7 +39,8 @@ const Manage = () => {
             if (window.confirm("Press OK to reset this game.")) {
                 await firestore.collection("play").doc(id).update({
                     start: false,
-                    error: ""
+                    error: "",
+                    runId: ""
                 });
 
                 await firestore.collection("call").doc(id).update({
@@ -63,7 +64,9 @@ const Manage = () => {
             try {
                 await firestore.collection("play").doc(id).update({
                     speed,
-                    start: true
+                    start: true,
+                    error: "",
+                    runId: `${Date.now()}-${Math.random().toString(36).slice(2)}`
                 });
             } catch (error) {
                 console.error("Error starting game:", error);
@@ -77,7 +80,8 @@ const Manage = () => {
         if (window.confirm("Press OK to pause the game.")) {
             try {
                 await firestore.collection("play").doc(id).update({
-                    start: false
+                    start: false,
+                    runId: ""
                 });
             } catch (error) {
                 console.error("Error pausing game:", error);
